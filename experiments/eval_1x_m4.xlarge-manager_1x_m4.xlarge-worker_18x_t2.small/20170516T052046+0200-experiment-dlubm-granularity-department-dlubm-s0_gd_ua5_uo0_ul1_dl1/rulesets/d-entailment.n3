@@ -1,0 +1,170 @@
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix : <#> .
+
+# BUGGY, first rough draft
+
+# D-Entailment
+# Grdf1D:
+# xxx aaa "sss"ˆˆddd . for ddd in D => sss"ˆˆddd rdf:type ddd .
+
+:foo :bar "2"^^xsd:string .
+:foo :bar "2"^^xsd:integer .
+
+:foo :baz "3"^^xsd:string .
+
+:baz rdfs:range xsd:integer .
+
+{ ?s ?p ?o . 
+  ?o log:datatype ?dt .
+} => {
+  ?o a ?dt .
+} .
+
+"4" a xsd:string .
+"4" a xsd:integer .
+
+"5" a xsd:string .
+"5.0" a xsd:integer .
+
+# cannot materialise every datatype entailments
+# Paper "On datatypes" - similar to "On blank nodes"?
+# do the database people have the datatype problem?
+# XML databases support for XML Schema?
+# store and compare canonical representation in joins and function comparisions
+
+# 1^^xsd:decimal
+# 1.0^^xsd:decimal
+# 1.00
+# 1.000
+# length(str(x))
+
+# filter only English literals
+
+#[] rdf:value "foo" .
+
+#{ ?subj rdf:value ?x . } => {
+# ?x a xsd:string .
+#} .
+
+#{ ?subj rdf:value ?x . } => {
+# ?x a xsd:integer .
+#} .
+
+#
+# ur types
+#
+xsd:anyType a rdfs:Datatype .
+
+xsd:anySimpleType rdfs:subClassOf xsd:anyType .
+
+#
+# built-in primitive types
+#
+xsd:gMonth rdfs:subClassOf xsd:anySimpleType .
+xsd:gDay rdfs:subClassOf xsd:anySimpleType .
+xsd:gMonthDay rdfs:subClassOf xsd:anySimpleType .
+xsd:gYear rdfs:subClassOf xsd:anySimpleType .
+xsd:gYearMonth rdfs:subClassOf xsd:anySimpleType .
+xsd:date rdfs:subClassOf xsd:anySimpleType .
+xsd:time rdfs:subClassOf xsd:anySimpleType .
+xsd:dateTime rdfs:subClassOf xsd:anySimpleType .
+xsd:duration rdfs:subClassOf xsd:anySimpleType .
+
+xsd:string rdfs:subClassOf xsd:anySimpleType .
+xsd:boolean rdfs:subClassOf xsd:anySimpleType .
+xsd:base64binary rdfs:subClassOf xsd:anySimpleType .
+xsd:hexBinary rdfs:subClassOf xsd:anySimpleType .
+xsd:float rdfs:subClassOf xsd:anySimpleType .
+xsd:decimal rdfs:subClassOf xsd:anySimpleType .
+xsd:double rdfs:subClassOf xsd:anySimpleType .
+xsd:anyURI rdfs:subClassOf xsd:anySimpleType .
+xsd:QName rdfs:subClassOf xsd:anySimpleType .
+xsd:NOTATION rdfs:subClassOf xsd:anySimpleType .
+
+#
+# built-in derived types
+#
+
+#
+# xsd:string
+#
+xsd:normalizedString rdfs:subClassOf xsd:string .
+
+xsd:token rdfs:subClassOf xsd:normalizedString .
+
+xsd:language rdfs:subClassOf xsd:token .
+xsd:Name rdfs:subClassOf xsd:token .
+xsd:NMTOKEN rdfs:subClassOf xsd:token .
+
+xsd:NCName rdfs:subClassOf xsd:Name .
+
+xsd:ID rdfs:subClassOf xsd:NCName .
+xsd:IDREF rdfs:subClassOf xsd:NCName .
+xsd:ENTITY rdfs:subClassOf xsd:NCName .
+
+# @@@ what about: NMTOKENS IDREFS ENTITIES ? (derived by list)
+
+#
+# xsd:integer 
+#
+xsd:integer rdfs:subClassOf xsd:decimal .
+xsd:nonPositiveInteger rdfs:subClassOf xsd:integer .
+xsd:long rdfs:subClassOf xsd:integer .
+xsd:nonNegativeInteger rdfs:subClassOf xsd:integer .
+
+xsd:negativeInteger rdfs:subClassOf xsd:nonPositiveInteger .
+xsd:int rdfs:subClassOf xsd:long .
+xsd:unsignedLong rdfs:subClassOf xsd:nonNegativeInteger .
+xsd:positiveInteger rdfs:subClassOf xsd:nonNegativeInteger .
+
+xsd:short rdfs:subClassOf xsd:int .
+xsd:unsignedInt rdfs:subClassOf xsd:unsignedLong .
+
+xsd:byte rdfs:subClassOf xsd:short .
+xsd:unsignedShort rdfs:subClassOf xsd:unsignedInt .
+
+xsd:unsignedByte rdfs:subClassOf xsd:unsignedShort .
+
+# RDFS
+# rules rdfs1 and rdfs13 are strange
+# every URI in set D is an instance of rdfs:Datatype.
+# Set D is an input argument
+# rdfs1: any URI aaa in D => aaa rdf:type rdfs:Datatype .
+
+# for now, we assume D is any XSD simple type
+{ ?x rdfs:subClassOf xsd:anySimpleType . } => { ?x rdf:type rdfs:Datatype . } .
+
+# rdfs:Datatypes are classes, and instances of datatypes are subClasses of literals
+# rdfs13: xxx rdf:type rdfs:Datatype => xxx rdfs:subClassOf rdfs:Literal .
+# that rule is already in rdfs.n3 ruleset
+
+# 
+# http://www.w3.org/TR/owl2-syntax/#Binary_Data explains disjointness between xsd:base64binary and xsd:hexBinary
+#
+# The following require owl-ld.n3 ruleset because of owl:disjointWith (or separate rules for disjointness)
+#
+# disjointness between value spaces
+#
+xsd:gMonth owl:disjointWith xsd:gDay, xsd:gMonthDay, xsd:gYear, xsd:gYearMonth, xsd:date, xsd:time, xsd:dateTime, xsd:duration, xsd:string, xsd:boolean, xsd:base64binary, xsd:hexBinary, xsd:float, xsd:decimal, xsd:double, xsd:anyURI, xsd:QName, xsd:NOTATION .
+xsd:gDay owl:disjointWith xsd:gMonthDay, xsd:gYear, xsd:gYearMonth, xsd:date, xsd:time, xsd:dateTime, xsd:duration, xsd:string, xsd:boolean, xsd:base64binary, xsd:hexBinary, xsd:float, xsd:decimal, xsd:double, xsd:anyURI, xsd:QName, xsd:NOTATION .
+xsd:gMonthDay owl:disjointWith xsd:gYear, xsd:gYearMonth, xsd:date, xsd:time, xsd:dateTime, xsd:duration, xsd:string, xsd:boolean, xsd:base64binary, xsd:hexBinary, xsd:float, xsd:decimal, xsd:double, xsd:anyURI, xsd:QName, xsd:NOTATION .
+xsd:gYear owl:disjointWith xsd:gYearMonth, xsd:date, xsd:time, xsd:dateTime, xsd:duration, xsd:string, xsd:boolean, xsd:base64binary, xsd:hexBinary, xsd:float, xsd:decimal, xsd:double, xsd:anyURI, xsd:QName, xsd:NOTATION .
+xsd:gYearMonth owl:disjointWith xsd:date, xsd:time, xsd:dateTime, xsd:duration, xsd:string, xsd:boolean, xsd:base64binary, xsd:hexBinary, xsd:float, xsd:decimal, xsd:double, xsd:anyURI, xsd:QName, xsd:NOTATION .
+xsd:date owl:disjointWith xsd:time, xsd:dateTime, xsd:duration, xsd:string, xsd:boolean, xsd:base64binary, xsd:hexBinary, xsd:float, xsd:decimal, xsd:double, xsd:anyURI, xsd:QName, xsd:NOTATION .
+xsd:time owl:disjointWith xsd:dateTime, xsd:duration, xsd:string, xsd:boolean, xsd:base64binary, xsd:hexBinary, xsd:float, xsd:decimal, xsd:double, xsd:anyURI, xsd:QName, xsd:NOTATION .
+xsd:dateTime owl:disjointWith xsd:duration, xsd:string, xsd:boolean, xsd:base64binary, xsd:hexBinary, xsd:float, xsd:decimal, xsd:double, xsd:anyURI, xsd:QName, xsd:NOTATION .
+xsd:duration owl:disjointWith xsd:string, xsd:boolean, xsd:base64binary, xsd:hexBinary, xsd:float, xsd:decimal, xsd:double, xsd:anyURI, xsd:QName, xsd:NOTATION .
+xsd:string owl:disjointWith xsd:boolean, xsd:base64binary, xsd:hexBinary, xsd:float, xsd:decimal, xsd:double, xsd:anyURI, xsd:QName, xsd:NOTATION .
+xsd:boolean owl:disjointWith xsd:base64binary, xsd:hexBinary, xsd:float, xsd:decimal, xsd:double, xsd:anyURI, xsd:QName, xsd:NOTATION .
+xsd:base64binary owl:disjointWith xsd:hexBinary, xsd:float, xsd:decimal, xsd:double, xsd:anyURI, xsd:QName, xsd:NOTATION .
+xsd:hexBinary owl:disjointWith xsd:float, xsd:decimal, xsd:double, xsd:anyURI, xsd:QName, xsd:NOTATION .
+xsd:float owl:disjointWith xsd:decimal, xsd:double, xsd:anyURI, xsd:QName, xsd:NOTATION .
+xsd:decimal owl:disjointWith xsd:double, xsd:anyURI, xsd:QName, xsd:NOTATION .
+xsd:double owl:disjointWith xsd:anyURI, xsd:QName, xsd:NOTATION .
+xsd:anyURI owl:disjointWith xsd:QName, xsd:NOTATION .
+xsd:QName owl:disjointWith xsd:NOTATION .
+

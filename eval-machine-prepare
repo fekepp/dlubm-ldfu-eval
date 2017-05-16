@@ -1,0 +1,22 @@
+#!/bin/bash
+
+
+# Currently, we are not yet using Docker containers for evaluation, but Docker Machine for convenience
+
+
+docker-machine ssh dlubm-eval "sudo apt-get -y install aptitude"
+docker-machine ssh dlubm-eval "sudo aptitude -y update"
+docker-machine ssh dlubm-eval "sudo aptitude -y full-upgrade"
+docker-machine ssh dlubm-eval "sudo aptitude -y install bc htop openjdk-8-jdk"
+docker-machine ssh dlubm-eval "curl --location 'https://linked-data-fu.github.io/releases/0.9.11/linked-data-fu-standalone-0.9.11-bin.tar.gz' -o ldfu.tar.gz"
+docker-machine ssh dlubm-eval "mkdir ldfu"
+docker-machine ssh dlubm-eval "tar --strip-components=1 -xzf ldfu.tar.gz -C ldfu"
+docker-machine ssh dlubm-eval "rm ldfu.tar.gz"
+docker-machine ssh dlubm-eval "sudo rm -rf /usr/share/ldfu"
+docker-machine ssh dlubm-eval "sudo mv ldfu /usr/share/"
+docker-machine ssh dlubm-eval "sudo chown root:root /usr/share/ldfu"
+docker-machine ssh dlubm-eval "sudo rm -f /usr/bin/ldfu"
+docker-machine ssh dlubm-eval "sudo ln -s /usr/share/ldfu/bin/ldfu.sh /usr/bin/ldfu"
+docker-machine ssh dlubm-eval "java -version"
+docker-machine ssh dlubm-eval "ldfu -h"
+docker-machine ssh dlubm-eval "sudo reboot"

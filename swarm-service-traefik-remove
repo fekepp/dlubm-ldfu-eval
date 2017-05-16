@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+echo "Swarm > Services > Traefik > Remove service"
+docker-machine ssh dlubm-swarm-manager \
+	"docker service rm traefik"
+echo "Swarm > Services > Traefik > Removed service"
+
+
+echo "Swarm > Networks > Traefik > Remove network"
+docker-machine ssh dlubm-swarm-manager "docker network rm traefik_proxy"
+echo "Swarm > Networks > Traefik > Removed network"
+

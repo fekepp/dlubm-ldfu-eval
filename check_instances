@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ldfu -p programs/dlubm-get-global.n3 -p programs/dlubm-get-universities.n3 -p programs/dlubm-get-departments.n3 2>&1 >/dev/null | grep -v "ERROR, 404" | grep -v "Elapsed" | grep -v "InputQueue" | grep -v "JoinBindings"

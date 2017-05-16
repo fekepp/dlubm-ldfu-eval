@@ -1,0 +1,138 @@
+# Prefixes: HTTP
+@prefix http: <http://www.w3.org/2011/http#> .
+@prefix http-m: <http://www.w3.org/2011/http-methods#> .
+
+# Prefixes: Query
+@prefix qrl: <http://www.aifb.kit.edu/project/ld-retriever/qrl#> .
+
+# Prefixes: XML
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Prefixes: RDF
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+# Prefixes: LUBM
+#@prefix lubm: <http://swat.cse.lehigh.edu/onto/univ-bench.owl#> .
+@prefix lubm: <http://o.dlubm.ddns.me/univ-bench.owl#> .
+
+
+#
+# Several Queries
+#
+
+{
+	?undergraduateStudent a lubm:GraduateStudent .
+} => {
+	?undergraduateStudent a lubm:Student .
+} .
+
+
+
+
+#
+# Query 12
+#
+
+#<owl:Class rdf:ID="Chair">
+#  <rdfs:label>chair</rdfs:label>
+#  <owl:intersectionOf rdf:parseType="Collection">
+#  <owl:Class rdf:about="#Person" /> 
+#  <owl:Restriction>
+#  <owl:onProperty rdf:resource="#headOf" /> 
+#  <owl:someValuesFrom>
+#  <owl:Class rdf:about="#Department" /> 
+#  </owl:someValuesFrom>
+#  </owl:Restriction>
+#  </owl:intersectionOf>
+#  <rdfs:subClassOf rdf:resource="#Professor" />
+#</owl:Class>
+
+{
+	?person
+		a lubm:Person ;
+		lubm:headOf ?department .
+	?department a lubm:Department .
+} => {
+	?person a lubm:Chair .
+} .
+
+
+#
+# Query 13
+#
+
+#<owl:ObjectProperty rdf:ID="hasAlumnus">
+#  <rdfs:label>has as an alumnus</rdfs:label>
+#  <rdfs:domain rdf:resource="#University" />
+#  <rdfs:range rdf:resource="#Person" />
+#  <owl:inverseOf rdf:resource="#degreeFrom"/>
+#</owl:ObjectProperty>
+
+#{
+#	?person
+#		a lubm:Person ;
+#		lubm:degreeFrom ?degreeFrom .
+#} => {
+#	?degreeFrom lubm:hasAlumnus ?person .
+#} .
+
+#<owl:ObjectProperty rdf:ID="doctoralDegreeFrom">
+#  <rdfs:label>has a doctoral degree from</rdfs:label>
+#  <rdfs:domain rdf:resource="#Person" />
+#  <rdfs:range rdf:resource="#University" />
+#  <rdfs:subPropertyOf rdf:resource="#degreeFrom" />
+#</owl:ObjectProperty>
+
+#{
+#	?person
+#		a lubm:Person ;
+#		lubm:doctoralDegreeFrom ?doctoralDegreeFrom .
+#} => {
+#	?person lubm:degreeFrom ?doctoralDegreeFrom .
+#} .
+
+#<owl:ObjectProperty rdf:ID="mastersDegreeFrom">
+#  <rdfs:label>has a masters degree from</rdfs:label>
+#  <rdfs:domain rdf:resource="#Person" />
+#  <rdfs:range rdf:resource="#University" />
+#  <rdfs:subPropertyOf rdf:resource="#degreeFrom"/>
+#</owl:ObjectProperty>
+
+#{
+#	?person
+#		a lubm:Person ;
+#		lubm:mastersDegreeFrom ?mastersDegreeFrom .
+#} => {
+#	?person lubm:degreeFrom ?mastersDegreeFrom .
+#} .
+
+#<owl:ObjectProperty rdf:ID="undergraduateDegreeFrom">
+#  <rdfs:label>has an undergraduate degree from</rdfs:label>
+#  <rdfs:domain rdf:resource="#Person" />
+#  <rdfs:range rdf:resource="#University" />
+#  <rdfs:subPropertyOf rdf:resource="#degreeFrom"/>
+#</owl:ObjectProperty>
+
+#{
+#	?person
+#		a lubm:Person ;
+#		lubm:undergraduateDegreeFrom ?undergraduateDegreeFrom .
+#} => {
+#	?person lubm:degreeFrom ?undergraduateDegreeFrom .
+#} .
+
+
+
+
+#
+# TMP
+#
+
+
+#{
+#	?undergraduateStudent a lubm:UndergraduateStudent .
+#} => {
+#	?undergraduateStudent a lubm:Student .
+#} .

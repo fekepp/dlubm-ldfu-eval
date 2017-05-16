@@ -1,0 +1,218 @@
+## taken from http://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules
+## and http://semanticweb.org/OWLLD/owl-ld.n3
+
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<> rdfs:comment "The OWL RL profile in N3 (incomplete, draft); Andreas Harth (harth@kit.edu)" .
+
+##  Table 4. The Semantics of Equality
+#  eq-ref
+{ ?s ?p ?o . } => { ?s owl:sameAs ?s . ?p owl:sameAs ?p . ?o owl:sameAs ?o .} .
+#  eq-sym
+{ ?x owl:sameAs ?y . } => { ?y owl:sameAs ?x . } .
+#  eq-trans
+{ ?x owl:sameAs ?y . ?y owl:sameAs ?z . } => { ?x owl:sameAs ?z . } .
+#  eq-rep-s
+{ ?s owl:sameAs ?s0 . ?s ?p ?o . } => { ?s0 ?p ?o . } .
+#  eq-rep-p
+{ ?p owl:sameAs ?p0 . ?s ?p ?o . } => { ?s ?p0 ?o . } .
+#  eq-rep-o
+{ ?o owl:sameAs ?o0 . ?s ?p ?o . } => { ?s ?p ?o0 . } .
+#  eq-diff1
+{ ?x owl:sameAs ?y ; owl:differentFrom ?y . } => { ?x a owl:Nothing . ?y a owl:Nothing . }  .
+#  eq-diff2
+#{ ?x  rdf:type  owl:AllDifferent. ?x  owl:members  ?y. LIST[?y  ?z1  ...  ?zn] ?zi  owl:sameAs  ?zj. } =>
+#     { false } .
+#  for each 1 ≤ i < j ≤ n
+#  eq-diff3
+#{ ?x  rdf:type  owl:AllDifferent. ?x  owl:distinctMembers  ?y. LIST[?y  ?z1  ...  ?zn] ?zi  owl:sameAs  ?zj. } =>
+#     { false } .
+#  for each 1 ≤ i < j ≤ n
+
+##  Table 5. The Semantics of Axioms about Properties
+#  prp-ap
+# {  } =>
+#     { ap  rdf:type  owl:AnnotationProperty. } .
+#  for each built-in annotation property of OWL 2 RL
+owl:priorVersion a owl:AnnotationProperty .
+owl:backwardCompatibleWith a owl:AnnotationProperty .
+owl:incompatibleWith a owl:AnnotationProperty .
+owl:deprecated a owl:AnnotationProperty .
+owl:versionInfo a owl:AnnotationProperty .
+rdfs:isDefinedBy a owl:AnnotationProperty .
+rdfs:label a owl:AnnotationProperty .
+rdfs:comment a owl:AnnotationProperty .
+rdfs:seeAlso a owl:AnnotationProperty .  
+#  prp-dom
+{ ?p rdfs:domain ?c . ?x ?p ?y . } => { ?x a ?c . } .
+#  prp-rng
+{ ?p rdfs:range ?c . ?x ?p ?y . } => { ?y a ?c . } .
+#  prp-fp
+{ ?p a owl:FunctionalProperty . ?x ?p ?y1 , ?y2 . } => { ?y1 owl:sameAs ?y2 . } .
+#  prp-ifp
+{ ?p a owl:InverseFunctionalProperty . ?x1 ?p ?y . ?x2 ?p ?y . } => { ?x1 owl:sameAs ?x2 . } .
+#  prp-irp
+{ ?p a owl:IrreflexiveProperty . ?x ?p ?x . } => { ?x a owl:Nothing . } .
+#  prp-symp
+{ ?p a owl:SymmetricProperty . ?x ?p ?y . } => { ?y ?p ?x . } .
+#  prp-asyp
+{ ?p a owl:AsymmetricProperty . ?x ?p ?y . ?y ?p ?x . } => { ?x a owl:Nothing . ?y a owl:Nothing . } .
+#  prp-trp
+{ ?p a owl:TransitiveProperty . ?x ?p ?y . ?y ?p ?z . } => { ?x ?p ?z . } .
+#  prp-spo1
+{ ?p1 rdfs:subPropertyOf ?p2 . ?x ?p1 ?y . } => { ?x ?p2 ?y . } .
+#  prp-spo2
+#{ ?p  owl:propertyChainAxiom  ?x. LIST[?x  ?p1  ...  ?pn] ?u1  ?p1  ?u2. ?u2  ?p2  ?u3. ... ?un  ?pn  ?un+1. } =>
+#    { ?u1  ?p  ?un+1. } .
+#  prp-eqp1
+{ ?p1 owl:equivalentProperty ?p2 . ?x ?p1 ?y . } => { ?x ?p2 ?y . } .
+#  prp-eqp2
+{ ?p1 owl:equivalentProperty ?p2 . ?x ?p2 ?y . } => { ?x ?p1 ?y . } .
+#  prp-pdw
+{ ?p1 owl:propertyDisjointWith ?p2 . ?x ?p1 ?y ; ?p2 ?y . } => { ?x a owl:Nothing . ?y a owl:Nothing . } .
+#  prp-adp
+#{ ?x  rdf:type  owl:AllDisjointProperties. ?x  owl:members  ?y. LIST[?y  ?p1  ...  ?pn] ?u  ?pi  ?v. ?u  ?pj  ?v. } =>
+#     { false } .
+#  for each 1 ≤ i < j ≤ n
+#  prp-inv1
+{ ?p1 owl:inverseOf ?p2 . ?x ?p1 ?y . } => { ?y ?p2 ?x . } .
+#  prp-inv2
+{ ?p1 owl:inverseOf ?p2 . ?x ?p2 ?y . } => { ?y ?p1 ?x . } .
+#  prp-key
+#{ ?c  owl:hasKey  ?u. LIST[?u  ?p1  ...  ?pn] ?x  rdf:type  ?c. ?x  ?p1  ?z1. ... ?x  ?pn  ?zn. ?y  rdf:type  ?c. ?y  ?p1  ?z1. ... ?y  ?pn  ?zn. } =>
+#     { ?x  owl:sameAs  ?y. } .
+#  prp-npa1
+#{ ?x owl:sourceIndividual ?i1 ; owl:assertionProperty ?p ; owl:targetIndividual ?i2 . ?i1 ?p ?i2 . } => { false } .
+#  prp-npa2
+#{ ?x owl:sourceIndividual ?i ; owl:assertionProperty ?p ; owl:targetValue ?lt . ?i ?p ?lt . } => { false } .
+
+##  Table 6. The Semantics of Classes
+#  cls-thing
+owl:Thing a owl:Class .
+#  cls-nothing1
+owl:Nothing a owl:Class .
+#  cls-nothing2
+#{ ?x a owl:Nothing . } => { false } .
+#  cls-int1
+# { ?c  owl:intersectionOf  ?x. LIST[?x  ?c1  ...  ?cn] ?y  rdf:type  ?c1. ?y  rdf:type  ?c2. ... ?y  rdf:type  ?cn. } =>
+#     { ?y  rdf:type  ?c. } .
+#  cls-int2
+#{ ?c  owl:intersectionOf  ?x. LIST[?x  ?c1  ...  ?cn] ?y  rdf:type  ?c. } =>
+#     { ?y  rdf:type  ?c1. ?y  rdf:type  ?c2. ... ?y  rdf:type  ?cn. } .
+#  cls-uni
+#{ ?c  owl:unionOf  ?x. LIST[?x  ?c1  ...  ?cn] ?y  rdf:type  ?ci. } =>
+#     { ?y  rdf:type  ?c. } .
+#  for each 1 ≤ i ≤ n
+#  cls-com
+{ ?c1 owl:complementOf ?c2 . ?x a ?c1 , ?c2 . } => { ?x a owl:Nothing . } .
+#  cls-svf1
+{ ?x owl:someValuesFrom ?y . ?x owl:onProperty ?p . ?u ?p ?v . ?v a ?y . } => { ?u a ?x . } .
+#  cls-svf2
+{ ?x owl:someValuesFrom owl:Thing . ?x owl:onProperty ?p . ?u ?p ?v . } => { ?u a ?x . } .
+#  cls-avf
+{ ?x owl:allValuesFrom ?y . ?x owl:onProperty ?p . ?u a ?x . ?u ?p ?v . } => { ?v a ?y . } .
+#  cls-hv1
+{ ?x owl:hasValue ?y . ?x owl:onProperty ?p . ?u a ?x . } => { ?u ?p ?y. } .
+#  cls-hv2
+{ ?x owl:hasValue ?y . ?x owl:onProperty ?p . ?u ?p ?y . } => { ?u a ?x . } .
+#  cls-maxc1
+#{ ?x owl:maxCardinality "0"^^xsd:nonNegativeInteger . ?x owl:onProperty ?p . ?u a ?x . ?u ?p ?y . } => { false } .
+#  cls-maxc2
+{ ?x owl:maxCardinality "1"^^xsd:nonNegativeInteger . ?x owl:onProperty ?p . ?u a ?x . ?u ?p ?y1 . ?u ?p ?y2 . } => { ?y1 owl:sameAs ?y2 . } .
+#  cls-maxqc1
+#{ ?x owl:maxQualifiedCardinality "0"^^xsd:nonNegativeInteger ; owl:onProperty ?p ; owl:onClass ?c . ?u a ?x . ?u ?p ?y . ?y a ?c . } => { false } .
+#  cls-maxqc2
+#{ ?x owl:maxQualifiedCardinality "0"^^xsd:nonNegativeInteger ; owl:onProperty ?p ; owl:onClass owl:Thing . ?u a ?x . ?u ?p ?y . } => { false } .
+#  cls-maxqc3
+{ ?x owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onProperty ?p ; owl:onClass ?c . ?u a ?x ; ?p ?y1 . ?y1 a ?c . ?u ?p ?y2 . ?y2 a ?c. } => { ?y1 owl:sameAs ?y2 . } .
+#  cls-maxqc4
+{ ?x owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onProperty ?p ; owl:onClass owl:Thing . ?u a ?x ; ?p ?y1, ?y2 . } => { ?y1 owl:sameAs ?y2 . } .
+#  cls-oo
+#{ ?c  owl:oneOf  ?x. LIST[?x  ?y1  ...  ?yn] } =>
+#     { ?y1  rdf:type  ?c. ... ?yn  rdf:type  ?c. } .
+
+##  Table 7. The Semantics of Class Axioms
+#  cax-sco
+{ ?c1 rdfs:subClassOf ?c2 . ?x a ?c1 . } => { ?x a ?c2 . }  .
+#  cax-eqc1
+{ ?c1 owl:equivalentClass ?c2 . ?x a ?c1 . } => { ?x a ?c2 . }  .
+#  cax-eqc2
+{ ?c1 owl:equivalentClass ?c2 . ?x a ?c2 . } => { ?x a ?c1 . }  .
+#  cax-dw
+{ ?c1 owl:disjointWith ?c2 . ?x a ?c1 , ?c2 . } => { ?x a owl:Nothing . }  .
+#  cax-adc
+#{ ?x  rdf:type  owl:AllDisjointClasses. ?x  owl:members  ?y. LIST[?y  ?c1  ...  ?cn] ?z  rdf:type  ?ci. ?z  rdf:type  ?cj. } =>
+#     { false } .
+#  for each 1 ≤ i < j ≤ n
+
+##  Table 8. The Semantics of Datatypes
+#  dt-type1
+#{  } =>
+#     { dt  rdf:type  rdfs:Datatype. } .
+#  for each datatype dt supported in OWL 2 RL
+#  dt-type2
+#{  } =>
+#     { lt  rdf:type  dt. } .
+#  for each literal lt and each datatype dt supported in OWL 2 RL such that the data value of lt is contained in the value space of dt
+#  dt-eq
+#{  } =>
+#     { lt1  owl:sameAs  lt2. } .
+#  for all literals lt1 and lt2 with the same data value
+#  dt-diff
+#{  } =>
+#     { lt1  owl:differentFrom  lt2. } .
+#  for all literals lt1 and lt2 with different data values
+#  dt-not-type
+#{ lt  rdf:type  dt. } =>
+#     { false } .
+#  for each literal lt and each datatype dt supported in OWL 2 RL such that the data value of lt is not contained in the value space of dt
+
+##  Table 9. The Semantics of Schema Vocabulary
+#  scm-cls
+{ ?c a owl:Class . } => { ?c rdfs:subClassOf ?c , owl:Thing ; owl:equivalentClass ?c . owl:Nothing rdfs:subClassOf ?c . } .
+#  scm-sco
+{ ?c1 rdfs:subClassOf ?c2 . ?c2 rdfs:subClassOf ?c3 . } => { ?c1 rdfs:subClassOf ?c3 . } .
+#  scm-eqc1
+{ ?c1 owl:equivalentClass ?c2 . } => { ?c1 rdfs:subClassOf ?c2 . ?c2 rdfs:subClassOf ?c1 . } .
+#  scm-eqc2
+{ ?c1 rdfs:subClassOf ?c2 . ?c2 rdfs:subClassOf ?c1 . } => { ?c1 owl:equivalentClass ?c2 . }  .
+#  scm-op
+{ ?p a owl:ObjectProperty . } => { ?p rdfs:subPropertyOf ?p ; owl:equivalentProperty ?p . } .
+#  scm-dp
+{ ?p a owl:DatatypeProperty . } => { ?p rdfs:subPropertyOf ?p ; owl:equivalentProperty ?p . } .
+#  scm-spo
+{ ?p1 rdfs:subPropertyOf ?p2 . ?p2 rdfs:subPropertyOf ?p3 . } => { ?p1 rdfs:subPropertyOf ?p3 . } .
+#  scm-eqp1
+{ ?p1 owl:equivalentProperty ?p2 . } => { ?p1 rdfs:subPropertyOf ?p2 . ?p2 rdfs:subPropertyOf ?p1 . } .
+#  scm-eqp2
+{ ?p1 rdfs:subPropertyOf ?p2 . ?p2 rdfs:subPropertyOf ?p1 . } => { ?p1 owl:equivalentProperty ?p2 . } .
+#  scm-dom1
+{ ?p rdfs:domain ?c1 . ?c1 rdfs:subClassOf ?c2 . } => { ?p rdfs:domain ?c2 . } .
+#  scm-dom2
+{ ?p2 rdfs:domain ?c . ?p1 rdfs:subPropertyOf ?p2 . } => { ?p1 rdfs:domain ?c . } .
+#  scm-rng1
+{ ?p rdfs:range ?c1 . ?c1 rdfs:subClassOf ?c2 . } => { ?p rdfs:range ?c2 . } .
+#  scm-rng2
+{ ?p2 rdfs:range ?c . ?p1 rdfs:subPropertyOf ?p2 . } => { ?p1 rdfs:range ?c . } .
+#  scm-hv
+{ ?c1 owl:hasValue ?i ; owl:onProperty ?p1 . ?c2 owl:hasValue ?i ; owl:onProperty ?p2 . ?p1 rdfs:subPropertyOf ?p2 . } => { ?c1 rdfs:subClassOf ?c2 . } .
+#  scm-svf1
+{ ?c1 owl:someValuesFrom ?y1 ; owl:onProperty ?p . ?c2 owl:someValuesFrom ?y2 ; owl:onProperty ?p . ?y1 rdfs:subClassOf ?y2 . } => { ?c1 rdfs:subClassOf ?c2 . } .
+#  scm-svf2
+{ ?c1 owl:someValuesFrom ?y ; owl:onProperty ?p1 . ?c2 owl:someValuesFrom ?y ; owl:onProperty ?p2 . ?p1 rdfs:subPropertyOf ?p2 . } => { ?c1 rdfs:subClassOf ?c2 . } .
+#  scm-avf1
+{ ?c1 owl:allValuesFrom ?y1 ; owl:onProperty ?p . ?c2 owl:allValuesFrom ?y2 ; owl:onProperty ?p . ?y1 rdfs:subClassOf ?y2 . } => { ?c1 rdfs:subClassOf ?c2 . } .
+#  scm-avf2
+{ ?c1 owl:allValuesFrom ?y ; owl:onProperty ?p1 . ?c2 owl:allValuesFrom ?y ; owl:onProperty ?p2 . ?p1 rdfs:subPropertyOf ?p2 . } => { ?c2 rdfs:subClassOf ?c1 . } .
+#  scm-int
+#{ ?c  owl:intersectionOf  ?x. LIST[?x  ?c1  ...  ?cn] } =>
+#     { ?c  rdfs:subClassOf  ?c1. ?c  rdfs:subClassOf  ?c2. ... ?c  rdfs:subClassOf  ?cn. } .
+#  scm-uni
+#{ ?c  owl:unionOf  ?x. LIST[?x  ?c1  ...  ?cn] } =>
+#     { ?c1  rdfs:subClassOf  ?c. ?c2  rdfs:subClassOf  ?c. ... ?cn  rdfs:subClassOf  ?c. } .
+
+
+
+

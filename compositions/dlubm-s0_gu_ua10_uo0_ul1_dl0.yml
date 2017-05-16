@@ -1,0 +1,173 @@
+networks:
+  proxy:
+    external: {name: traefik_proxy}
+services:
+  u0_dl0_ul1_uo0_ua10_gu_s0:
+    deploy:
+      labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u0.dlubm.ddns.me']
+      placement:
+        constraints: [node.role == worker]
+    environment: ['DLUBM_ONTOLOGY=http://o.dlubm.ddns.me/univ-bench.owl', DLUBM_SEED=0,
+      DLUBM_GRANULARITY=UNIVERSITY, DLUBM_UNIVERSITY_AMOUNT=10, DLUBM_UNIVERSITY_OFFSET=0,
+      DLUBM_UNIVERSITY_LIMIT=1, 'DLUBM_UNIVERSITY_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/u#',
+      DLUBM_DEPARTMENT_LIMIT=0, 'DLUBM_DEPARTMENT_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/d{DEPARTMENT_INDEX}#',
+      DLUBM_HOST_DEPTH=UNIVERSITY, DLUBM_HOST_UNIVERSITY_AMOUNT=1, DLUBM_HOST_UNIVERSITY_OFFSET=0,
+      DLUBM_HOST_DEPARTMENT_AMOUNT=0, DLUBM_HOST_DEPARTMENT_OFFSET=0]
+    image: fekepp/dlubm:1.9.0-pr
+    labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u0.dlubm.ddns.me']
+    networks: [proxy]
+  u8_dl0_ul1_uo0_ua10_gu_s0:
+    deploy:
+      labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u8.dlubm.ddns.me']
+      placement:
+        constraints: [node.role == worker]
+    environment: ['DLUBM_ONTOLOGY=http://o.dlubm.ddns.me/univ-bench.owl', DLUBM_SEED=0,
+      DLUBM_GRANULARITY=UNIVERSITY, DLUBM_UNIVERSITY_AMOUNT=10, DLUBM_UNIVERSITY_OFFSET=0,
+      DLUBM_UNIVERSITY_LIMIT=1, 'DLUBM_UNIVERSITY_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/u#',
+      DLUBM_DEPARTMENT_LIMIT=0, 'DLUBM_DEPARTMENT_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/d{DEPARTMENT_INDEX}#',
+      DLUBM_HOST_DEPTH=UNIVERSITY, DLUBM_HOST_UNIVERSITY_AMOUNT=1, DLUBM_HOST_UNIVERSITY_OFFSET=8,
+      DLUBM_HOST_DEPARTMENT_AMOUNT=0, DLUBM_HOST_DEPARTMENT_OFFSET=0]
+    image: fekepp/dlubm:1.9.0-pr
+    labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u8.dlubm.ddns.me']
+    networks: [proxy]
+  u1_dl0_ul1_uo0_ua10_gu_s0:
+    deploy:
+      labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u1.dlubm.ddns.me']
+      placement:
+        constraints: [node.role == worker]
+    environment: ['DLUBM_ONTOLOGY=http://o.dlubm.ddns.me/univ-bench.owl', DLUBM_SEED=0,
+      DLUBM_GRANULARITY=UNIVERSITY, DLUBM_UNIVERSITY_AMOUNT=10, DLUBM_UNIVERSITY_OFFSET=0,
+      DLUBM_UNIVERSITY_LIMIT=1, 'DLUBM_UNIVERSITY_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/u#',
+      DLUBM_DEPARTMENT_LIMIT=0, 'DLUBM_DEPARTMENT_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/d{DEPARTMENT_INDEX}#',
+      DLUBM_HOST_DEPTH=UNIVERSITY, DLUBM_HOST_UNIVERSITY_AMOUNT=1, DLUBM_HOST_UNIVERSITY_OFFSET=1,
+      DLUBM_HOST_DEPARTMENT_AMOUNT=0, DLUBM_HOST_DEPARTMENT_OFFSET=0]
+    image: fekepp/dlubm:1.9.0-pr
+    labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u1.dlubm.ddns.me']
+    networks: [proxy]
+  u2_dl0_ul1_uo0_ua10_gu_s0:
+    deploy:
+      labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u2.dlubm.ddns.me']
+      placement:
+        constraints: [node.role == worker]
+    environment: ['DLUBM_ONTOLOGY=http://o.dlubm.ddns.me/univ-bench.owl', DLUBM_SEED=0,
+      DLUBM_GRANULARITY=UNIVERSITY, DLUBM_UNIVERSITY_AMOUNT=10, DLUBM_UNIVERSITY_OFFSET=0,
+      DLUBM_UNIVERSITY_LIMIT=1, 'DLUBM_UNIVERSITY_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/u#',
+      DLUBM_DEPARTMENT_LIMIT=0, 'DLUBM_DEPARTMENT_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/d{DEPARTMENT_INDEX}#',
+      DLUBM_HOST_DEPTH=UNIVERSITY, DLUBM_HOST_UNIVERSITY_AMOUNT=1, DLUBM_HOST_UNIVERSITY_OFFSET=2,
+      DLUBM_HOST_DEPARTMENT_AMOUNT=0, DLUBM_HOST_DEPARTMENT_OFFSET=0]
+    image: fekepp/dlubm:1.9.0-pr
+    labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u2.dlubm.ddns.me']
+    networks: [proxy]
+  u3_dl0_ul1_uo0_ua10_gu_s0:
+    deploy:
+      labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u3.dlubm.ddns.me']
+      placement:
+        constraints: [node.role == worker]
+    environment: ['DLUBM_ONTOLOGY=http://o.dlubm.ddns.me/univ-bench.owl', DLUBM_SEED=0,
+      DLUBM_GRANULARITY=UNIVERSITY, DLUBM_UNIVERSITY_AMOUNT=10, DLUBM_UNIVERSITY_OFFSET=0,
+      DLUBM_UNIVERSITY_LIMIT=1, 'DLUBM_UNIVERSITY_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/u#',
+      DLUBM_DEPARTMENT_LIMIT=0, 'DLUBM_DEPARTMENT_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/d{DEPARTMENT_INDEX}#',
+      DLUBM_HOST_DEPTH=UNIVERSITY, DLUBM_HOST_UNIVERSITY_AMOUNT=1, DLUBM_HOST_UNIVERSITY_OFFSET=3,
+      DLUBM_HOST_DEPARTMENT_AMOUNT=0, DLUBM_HOST_DEPARTMENT_OFFSET=0]
+    image: fekepp/dlubm:1.9.0-pr
+    labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u3.dlubm.ddns.me']
+    networks: [proxy]
+  u6_dl0_ul1_uo0_ua10_gu_s0:
+    deploy:
+      labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u6.dlubm.ddns.me']
+      placement:
+        constraints: [node.role == worker]
+    environment: ['DLUBM_ONTOLOGY=http://o.dlubm.ddns.me/univ-bench.owl', DLUBM_SEED=0,
+      DLUBM_GRANULARITY=UNIVERSITY, DLUBM_UNIVERSITY_AMOUNT=10, DLUBM_UNIVERSITY_OFFSET=0,
+      DLUBM_UNIVERSITY_LIMIT=1, 'DLUBM_UNIVERSITY_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/u#',
+      DLUBM_DEPARTMENT_LIMIT=0, 'DLUBM_DEPARTMENT_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/d{DEPARTMENT_INDEX}#',
+      DLUBM_HOST_DEPTH=UNIVERSITY, DLUBM_HOST_UNIVERSITY_AMOUNT=1, DLUBM_HOST_UNIVERSITY_OFFSET=6,
+      DLUBM_HOST_DEPARTMENT_AMOUNT=0, DLUBM_HOST_DEPARTMENT_OFFSET=0]
+    image: fekepp/dlubm:1.9.0-pr
+    labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u6.dlubm.ddns.me']
+    networks: [proxy]
+  u7_dl0_ul1_uo0_ua10_gu_s0:
+    deploy:
+      labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u7.dlubm.ddns.me']
+      placement:
+        constraints: [node.role == worker]
+    environment: ['DLUBM_ONTOLOGY=http://o.dlubm.ddns.me/univ-bench.owl', DLUBM_SEED=0,
+      DLUBM_GRANULARITY=UNIVERSITY, DLUBM_UNIVERSITY_AMOUNT=10, DLUBM_UNIVERSITY_OFFSET=0,
+      DLUBM_UNIVERSITY_LIMIT=1, 'DLUBM_UNIVERSITY_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/u#',
+      DLUBM_DEPARTMENT_LIMIT=0, 'DLUBM_DEPARTMENT_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/d{DEPARTMENT_INDEX}#',
+      DLUBM_HOST_DEPTH=UNIVERSITY, DLUBM_HOST_UNIVERSITY_AMOUNT=1, DLUBM_HOST_UNIVERSITY_OFFSET=7,
+      DLUBM_HOST_DEPARTMENT_AMOUNT=0, DLUBM_HOST_DEPARTMENT_OFFSET=0]
+    image: fekepp/dlubm:1.9.0-pr
+    labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u7.dlubm.ddns.me']
+    networks: [proxy]
+  u9_dl0_ul1_uo0_ua10_gu_s0:
+    deploy:
+      labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u9.dlubm.ddns.me']
+      placement:
+        constraints: [node.role == worker]
+    environment: ['DLUBM_ONTOLOGY=http://o.dlubm.ddns.me/univ-bench.owl', DLUBM_SEED=0,
+      DLUBM_GRANULARITY=UNIVERSITY, DLUBM_UNIVERSITY_AMOUNT=10, DLUBM_UNIVERSITY_OFFSET=0,
+      DLUBM_UNIVERSITY_LIMIT=1, 'DLUBM_UNIVERSITY_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/u#',
+      DLUBM_DEPARTMENT_LIMIT=0, 'DLUBM_DEPARTMENT_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/d{DEPARTMENT_INDEX}#',
+      DLUBM_HOST_DEPTH=UNIVERSITY, DLUBM_HOST_UNIVERSITY_AMOUNT=1, DLUBM_HOST_UNIVERSITY_OFFSET=9,
+      DLUBM_HOST_DEPARTMENT_AMOUNT=0, DLUBM_HOST_DEPARTMENT_OFFSET=0]
+    image: fekepp/dlubm:1.9.0-pr
+    labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u9.dlubm.ddns.me']
+    networks: [proxy]
+  u5_dl0_ul1_uo0_ua10_gu_s0:
+    deploy:
+      labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u5.dlubm.ddns.me']
+      placement:
+        constraints: [node.role == worker]
+    environment: ['DLUBM_ONTOLOGY=http://o.dlubm.ddns.me/univ-bench.owl', DLUBM_SEED=0,
+      DLUBM_GRANULARITY=UNIVERSITY, DLUBM_UNIVERSITY_AMOUNT=10, DLUBM_UNIVERSITY_OFFSET=0,
+      DLUBM_UNIVERSITY_LIMIT=1, 'DLUBM_UNIVERSITY_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/u#',
+      DLUBM_DEPARTMENT_LIMIT=0, 'DLUBM_DEPARTMENT_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/d{DEPARTMENT_INDEX}#',
+      DLUBM_HOST_DEPTH=UNIVERSITY, DLUBM_HOST_UNIVERSITY_AMOUNT=1, DLUBM_HOST_UNIVERSITY_OFFSET=5,
+      DLUBM_HOST_DEPARTMENT_AMOUNT=0, DLUBM_HOST_DEPARTMENT_OFFSET=0]
+    image: fekepp/dlubm:1.9.0-pr
+    labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u5.dlubm.ddns.me']
+    networks: [proxy]
+  u4_dl0_ul1_uo0_ua10_gu_s0:
+    deploy:
+      labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u4.dlubm.ddns.me']
+      placement:
+        constraints: [node.role == worker]
+    environment: ['DLUBM_ONTOLOGY=http://o.dlubm.ddns.me/univ-bench.owl', DLUBM_SEED=0,
+      DLUBM_GRANULARITY=UNIVERSITY, DLUBM_UNIVERSITY_AMOUNT=10, DLUBM_UNIVERSITY_OFFSET=0,
+      DLUBM_UNIVERSITY_LIMIT=1, 'DLUBM_UNIVERSITY_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/u#',
+      DLUBM_DEPARTMENT_LIMIT=0, 'DLUBM_DEPARTMENT_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/d{DEPARTMENT_INDEX}#',
+      DLUBM_HOST_DEPTH=UNIVERSITY, DLUBM_HOST_UNIVERSITY_AMOUNT=1, DLUBM_HOST_UNIVERSITY_OFFSET=4,
+      DLUBM_HOST_DEPARTMENT_AMOUNT=0, DLUBM_HOST_DEPARTMENT_OFFSET=0]
+    image: fekepp/dlubm:1.9.0-pr
+    labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u4.dlubm.ddns.me']
+    networks: [proxy]
+  o_dl0_ul1_uo0_ua10_gu_s0:
+    deploy:
+      labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:o.dlubm.ddns.me']
+      placement:
+        constraints: [node.role == worker]
+    environment: ['DLUBM_ONTOLOGY=http://o.dlubm.ddns.me/univ-bench.owl', DLUBM_SEED=0,
+      DLUBM_GRANULARITY=UNIVERSITY, DLUBM_UNIVERSITY_AMOUNT=10, DLUBM_UNIVERSITY_OFFSET=0,
+      DLUBM_UNIVERSITY_LIMIT=1, 'DLUBM_UNIVERSITY_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/u#',
+      DLUBM_DEPARTMENT_LIMIT=0, 'DLUBM_DEPARTMENT_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/d{DEPARTMENT_INDEX}#',
+      DLUBM_HOST_DEPTH=ONTOLOGY, DLUBM_HOST_UNIVERSITY_AMOUNT=0, DLUBM_HOST_UNIVERSITY_OFFSET=0,
+      DLUBM_HOST_DEPARTMENT_AMOUNT=0, DLUBM_HOST_DEPARTMENT_OFFSET=0]
+    image: fekepp/dlubm:1.9.0-pr
+    labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:o.dlubm.ddns.me']
+    networks: [proxy]
+  g_dl0_ul1_uo0_ua10_gu_s0:
+    deploy:
+      labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:g.dlubm.ddns.me,dlubm.ddns.me']
+      placement:
+        constraints: [node.role == worker]
+    environment: ['DLUBM_ONTOLOGY=http://o.dlubm.ddns.me/univ-bench.owl', DLUBM_SEED=0,
+      DLUBM_GRANULARITY=UNIVERSITY, DLUBM_UNIVERSITY_AMOUNT=10, DLUBM_UNIVERSITY_OFFSET=0,
+      DLUBM_UNIVERSITY_LIMIT=1, 'DLUBM_UNIVERSITY_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/u#',
+      DLUBM_DEPARTMENT_LIMIT=0, 'DLUBM_DEPARTMENT_TEMPLATE=http://u{UNIVERSITY_INDEX}.dlubm.ddns.me/d{DEPARTMENT_INDEX}#',
+      DLUBM_HOST_DEPTH=GLOBAL, DLUBM_HOST_UNIVERSITY_AMOUNT=10, DLUBM_HOST_UNIVERSITY_OFFSET=0,
+      DLUBM_HOST_DEPARTMENT_AMOUNT=0, DLUBM_HOST_DEPARTMENT_OFFSET=0]
+    image: fekepp/dlubm:1.9.0-pr
+    labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:g.dlubm.ddns.me,dlubm.ddns.me']
+    networks: [proxy]
+version: '3'

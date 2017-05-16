@@ -1,0 +1,58 @@
+# Prefixes: HTTP
+@prefix http: <http://www.w3.org/2011/http#> .
+@prefix http-m: <http://www.w3.org/2011/http-methods#> .
+
+# Prefixes: Query
+@prefix qrl: <http://www.aifb.kit.edu/project/ld-retriever/qrl#> .
+
+# Prefixes: XML
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Prefixes: RDF
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+# Prefixes: LUBM
+#@prefix lubm: <http://swat.cse.lehigh.edu/onto/univ-bench.owl#> .
+@prefix lubm: <http://o.dlubm.ddns.me/univ-bench.owl#> .
+
+# Prefixes: LD-Fu
+@prefix ldfu: <http://ldfu/#> .
+@prefix ldfu-c: <http://ldfu-configuration/#> .
+@prefix ldfu-l: <http://ldfu-logging/#> .
+@prefix ldfu-r: <http://ldfu/rest#> .
+
+#Prefixes: Test
+@prefix this: <http://this#> .
+@prefix demo: <http://vocab.arvida.de/2015/03/demo#> .
+@prefix foobar: <http://foo.bar/#> .
+
+
+#
+# Configuration
+#
+#this:dlubm this:uri <http://dlubm.ddns.me> .
+this:dlubm this:uri <http://g.dlubm.ddns.me> .
+
+
+#
+# Rules
+#
+{
+	this:dlubm this:uri ?uri .
+} => {
+	[] http:mthd http-m:GET; http:requestURI ?uri .
+} .
+
+#{
+#	?uri a lubm:University .
+#} => {
+#	[] http:mthd http-m:GET; http:requestURI ?uri .
+#} .
+
+#{
+#	?uri a lubm:Department .
+#} => {
+#	[] http:mthd http-m:GET; http:requestURI ?uri .
+#} .

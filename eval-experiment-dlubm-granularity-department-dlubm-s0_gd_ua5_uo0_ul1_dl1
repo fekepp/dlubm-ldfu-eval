@@ -1,0 +1,18 @@
+#!/bin/bash
+
+
+# Currently, we are not yet using Docker containers for evaluation, but Docker Machine for convenience
+
+
+docker-machine ssh dlubm-eval "rm -rf ~/experiment"
+docker-machine ssh dlubm-eval "mkdir ~/experiment"
+
+docker-machine scp -r programs dlubm-eval:~/experiment
+docker-machine scp -r queries dlubm-eval:~/experiment
+docker-machine scp -r rulesets dlubm-eval:~/experiment
+docker-machine scp -r scripts dlubm-eval:~/experiment
+
+docker-machine ssh dlubm-eval "cd ~/experiment && ./scripts/experiment-dlubm-granularity-department-dlubm-5"
+
+docker-machine scp -r dlubm-eval:~/experiment experiments/$(date "+%Y%m%dT%H%M%S%z")-experiment-dlubm-granularity-department-dlubm-s0_gd_ua5_uo0_ul1_dl1
+

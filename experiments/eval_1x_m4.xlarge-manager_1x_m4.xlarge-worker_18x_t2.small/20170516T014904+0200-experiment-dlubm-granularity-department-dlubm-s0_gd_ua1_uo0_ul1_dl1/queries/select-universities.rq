@@ -1,0 +1,11 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+#PREFIX lubm: <http://swat.cse.lehigh.edu/onto/univ-bench.owl#>
+PREFIX lubm: <http://o.dl1.ul1.uo0.ua5.gd.s0.dlubm.ddns.me/univ-bench.owl#>
+
+SELECT
+	?universityName
+	?university
+WHERE {
+	?university a lubm:University .
+		?university lubm:name ?universityName .
+}

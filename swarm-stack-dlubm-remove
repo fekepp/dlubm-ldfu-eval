@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+echo "Docker > Switch environment > dlubm-swarm-manager"
+eval $(docker-machine env dlubm-swarm-manager)
+echo "Docker > Switched environment > dlubm-swarm-manager"
+
+echo "Swarm > Stack > DLUBM > Remove"
+docker stack rm dlubm
+echo "Swarm > Stack > DLUBM > Removed"

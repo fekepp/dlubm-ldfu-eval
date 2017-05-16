@@ -1,0 +1,9 @@
+#!/bin/bash
+
+
+echo "Swarm > Retrieve node list from manager"
+docker-machine ssh dlubm-swarm-manager "docker node ls"
+echo "Swarm > Retrieved node list from manager"
+
+
+

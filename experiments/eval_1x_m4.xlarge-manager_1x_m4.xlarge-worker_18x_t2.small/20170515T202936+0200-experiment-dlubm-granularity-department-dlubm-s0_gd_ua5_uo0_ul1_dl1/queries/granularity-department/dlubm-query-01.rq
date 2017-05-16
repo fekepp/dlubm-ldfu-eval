@@ -1,0 +1,23 @@
+# Query1
+# This query bears large input and high selectivity. It queries about just one class and
+# one property and does not assume any hierarchy information or inference.
+#PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+#PREFIX ub: <http://www.lehigh.edu/~zhp2/2004/0401/univ-bench.owl#>
+#SELECT ?X	
+#WHERE
+#{?X rdf:type ub:GraduateStudent .
+#  ?X ub:takesCourse
+#http://www.Department0.University0.edu/GraduateCourse0}
+
+
+
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX lubm: <http://o.dlubm.ddns.me/univ-bench.owl#>
+
+SELECT DISTINCT
+	?X
+WHERE {
+	?X rdf:type lubm:GraduateStudent .
+	?X lubm:takesCourse <http://d0.u0.dlubm.ddns.me/d#GraduateCourse0> .
+}

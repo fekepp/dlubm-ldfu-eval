@@ -1,0 +1,14 @@
+#!/bin/bash
+
+
+echo "Swarm > Services > Portainer > Create service"
+docker-machine ssh dlubm-swarm-manager \
+	"docker service create \
+		--name portainer \
+		--label traefik.port=9000 \
+		--network traefik_proxy \
+		--constraint 'node.role == manager' \
+		--mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+		portainer/portainer \
+			-H unix:///var/run/docker.sock"
+echo "Swarm > Services > Portainer > Created service"
