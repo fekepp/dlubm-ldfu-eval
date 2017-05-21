@@ -45,7 +45,6 @@ then
 	#
 	# https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option
 	#
-	# TCP port 2375 for un-encrypted communication with the daemon
 	# TCP port 2376 for encrypted communication with the daemon
 	echo "Open ports for Docker communication"
 	aws ec2 --region "${REGION}" authorize-security-group-ingress --group-name "${SECURITY_GROUP_NAME}" --protocol tcp --port 2376 --cidr 0.0.0.0/0
