@@ -1,0 +1,24 @@
+#!/bin/bash
+
+
+# Currently, we are not yet using Docker containers for evaluation, but Docker Machine for convenience
+
+
+# Include configuration
+source configuration
+
+
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "rm -rf ~/experiment"
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "mkdir ~/experiment"
+
+docker-machine scp -r programs ${INSTANCE_NAME_EVALUATION}:~/experiment
+docker-machine scp -r queries ${INSTANCE_NAME_EVALUATION}:~/experiment
+docker-machine scp -r rulesets ${INSTANCE_NAME_EVALUATION}:~/experiment
+docker-machine scp -r scripts ${INSTANCE_NAME_EVALUATION}:~/experiment
+
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "cd ~/experiment && ./scripts/experiment"
+
+mkdir -p experiments
+
+docker-machine scp -r ${INSTANCE_NAME_EVALUATION}:~/experiment experiments/$(date "+%Y%m%dT%H%M%S%z")-experiment
+
