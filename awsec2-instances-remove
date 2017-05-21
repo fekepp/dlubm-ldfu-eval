@@ -12,9 +12,9 @@ evaluation_instance_name=$(docker-machine ls -q | grep "${INSTANCE_NAME_EVALUATI
 
 if [ "${worker_instance_names}" != "" ] 
 then
-	echo -en "Remove Docker Swarm worker instances >\n${worker_instance_names}\n..."
+	echo -e "Remove Docker Swarm worker instances >\n${worker_instance_names}\n..."
 	docker-machine rm -y ${worker_instance_names}
-	echo " done!"
+	echo "done!"
 else
 	echo "Found no Docker Swarm worker instances"
 fi
@@ -22,9 +22,9 @@ fi
 
 if [ "${manager_instance_names}" != "" ] 
 then
-	echo -en "Remove Docker Swarm manager instances >\n${manager_instance_names}\n..."
+	echo -e "Remove Docker Swarm manager instances >\n${manager_instance_names}\n..."
 	docker-machine rm -y ${manager_instance_names}
-	echo " done!"
+	echo "done!"
 else
 	echo "Found no Docker Swarm manager instances"
 fi
@@ -32,9 +32,9 @@ fi
 
 if [ "${evaluation_instance_name}" != "" ] 
 then
-	echo -n "Remove evaulation instance > ${evaluation_instance_name}..."
+	echo "Remove evaulation instance > ${evaluation_instance_name}..."
 	docker-machine rm -y ${evaluation_instance_name}
-	echo " done!"
+	echo "done!"
 else
 	echo "Found no evaluation instance"
 fi
