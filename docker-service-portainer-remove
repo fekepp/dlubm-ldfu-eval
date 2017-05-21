@@ -1,0 +1,17 @@
+#!/bin/bash
+
+
+# Include configuration
+source configuration
+
+
+echo -n "Retrieve first manager instance name..."
+first_manager_instance_name="$(docker-machine ls -q | grep "dlubm-swarm-manager-[0-9]*0$")"
+echo " done! [${first_manager_instance_name}]"
+
+
+echo -n "Remove service > Portainer..."
+container_name=$(docker-machine ssh ${first_manager_instance_name} \
+	"docker service rm portainer")
+echo " done! [${container_name}]"
+

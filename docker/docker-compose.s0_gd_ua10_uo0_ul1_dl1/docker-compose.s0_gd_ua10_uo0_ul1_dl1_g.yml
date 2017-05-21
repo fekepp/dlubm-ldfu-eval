@@ -1,0 +1,47 @@
+version: '3'
+
+
+networks:
+  proxy:
+    external:
+      name: traefik_proxy
+
+
+services:
+
+
+
+
+##
+## GLOBAL
+##
+  s0_gd_ua10_uo0_ul1_dl1_g:
+    image: "fekepp/dlubm:1.9.0-pr"
+    deploy:
+      labels:
+        - "traefik.docker.network=traefik_proxy"
+        - "traefik.port=80"
+        - "traefik.frontend.rule=Host:g.dl1.ul1.uo0.ua10.gd.s0.dlubm.ddns.me,dlubm.ddns.me"
+    labels:
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.port=80"
+      - "traefik.frontend.rule=Host:g.dl1.ul1.uo0.ua10.gd.s0.dlubm.local"
+    networks:
+      - proxy
+    environment:
+      - DLUBM_SEED=0
+      - DLUBM_GRANULARITY=DEPARTMENT
+      - DLUBM_UNIVERSITY_AMOUNT=10
+      - DLUBM_UNIVERSITY_OFFSET=0
+      - DLUBM_UNIVERSITY_LIMIT=1
+      - DLUBM_UNIVERSITY_TEMPLATE=http://u{UNIVERSITY_INDEX}.dl1.ul1.uo0.ua10.gd.s0.dlubm.ddns.me/#
+      - DLUBM_DEPARTMENT_LIMIT=1
+      - DLUBM_DEPARTMENT_TEMPLATE=http://d{DEPARTMENT_INDEX}.u{UNIVERSITY_INDEX}.dl1.ul1.uo0.ua10.gd.s0.dlubm.ddns.me/#
+      - DLUBM_HOST_DEPTH=GLOBAL
+      - DLUBM_HOST_UNIVERSITY_AMOUNT=10
+      - DLUBM_HOST_UNIVERSITY_OFFSET=0
+      - DLUBM_HOST_DEPARTMENT_AMOUNT=0
+      - DLUBM_HOST_DEPARTMENT_OFFSET=0
+
+
+

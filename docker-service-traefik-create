@@ -1,0 +1,29 @@
+#!/bin/bash
+
+
+# Include configuration
+source configuration
+
+
+echo -n "Retrieve first manager instance name..."
+first_manager_instance_name="$(docker-machine ls -q | grep "dlubm-swarm-manager-[0-9]*0$")"
+echo " done! [${first_manager_instance_name}]"
+
+
+echo -n "Create service > Traefik..."
+container_id=$(docker-machine ssh ${first_manager_instance_name} \
+	"docker service create \
+		--name traefik \
+		--constraint=node.role==manager \
+		--publish 80:80 \
+		--publish 8080:8080 \
+		--mount type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock \
+		--network "${NETWORK_REVERSE_PROXY}" \
+		traefik \
+			--docker \
+			--docker.swarmmode \
+			--docker.domain="${DOMAIN}" \
+			--docker.watch \
+			--web")
+echo " done! [${container_id}]"
+

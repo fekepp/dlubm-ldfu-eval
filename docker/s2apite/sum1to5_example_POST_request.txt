@@ -1,0 +1,20 @@
+POST  http://localhost:8080/marmotta/ldp/WebService2/start
+Accept: text/turtle
+Slug: start
+If-Match: W/"1487524299000"
+Content-Type: text/turtle
+@prefix ex: <http://example.org/> .
+@prefix ldp: <http://www.w3.org/ns/ldp#> .
+@prefix step: <http://step.aifb.kit.edu/> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+
+[]	ex:summand1	"1" ;
+	ex:summand2	"2" ;
+    ex:summand3	"3" ;
+	ex:summand4	"4" ;
+	ex:summand5	"5" .
+

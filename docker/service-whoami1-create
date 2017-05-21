@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# https://docs.traefik.io/user-guide/swarm-mode/
+
+docker service create \
+	--name whoami1 \
+	--label traefik.port=80 \
+	--network traefik \
+	--label traefik.backend.loadbalancer.sticky=true \
+	emilevauge/whoami

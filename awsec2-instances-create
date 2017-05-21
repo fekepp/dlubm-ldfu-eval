@@ -1,0 +1,62 @@
+#!/bin/bash
+
+
+# Include configuration
+source configuration
+
+
+index_first=0
+index_last=$(expr $INSTANCE_AMOUNT_SWARM_MANAGER - 1)
+index_padding=${#index_last}
+
+echo "Create instances for Docker Swarm managers"
+for index in $(seq -f "%0${index_padding}g" ${index_first} ${index_last})
+do
+	
+	echo "Create instance for Docker Swarm manager > ${INSTANCE_NAME_PREFIX_SWARM_MANAGER}${index}..."
+	docker-machine create \
+		--driver amazonec2 \
+		--amazonec2-region "${REGION}" \
+		--amazonec2-security-group "${SECURITY_GROUP_NAME}" \
+		--amazonec2-instance-type "${INSTANCE_TYPE_SWARM_MANAGER}" \
+		--amazonec2-ami "${AMI}" \
+		--amazonec2-ssh-user "${SSH_USER}" \
+		"${INSTANCE_NAME_PREFIX_SWARM_MANAGER}${index}"
+	echo "done!"
+	
+done
+echo " done!"
+
+
+index_first=0
+index_last=$(expr $INSTANCE_AMOUNT_SWARM_WORKER - 1)
+index_padding=${#index_last}
+
+echo "Create instances for Docker Swarm workers..."
+for index in $(seq -f "%0${index_padding}g" ${index_first} ${index_last})
+do
+	
+	echo "Create instance for Docker Swarm worker > ${INSTANCE_NAME_PREFIX_SWARM_WORKER}${index}..."
+	docker-machine create \
+		--driver amazonec2 \
+		--amazonec2-region "${REGION}" \
+		--amazonec2-security-group "${SECURITY_GROUP_NAME}" \
+		--amazonec2-instance-type "${INSTANCE_TYPE_SWARM_WORKER}" \
+		--amazonec2-ami "${AMI}" \
+		--amazonec2-ssh-user "${SSH_USER}" \
+		"${INSTANCE_NAME_PREFIX_SWARM_WORKER}${index}"
+	echo "done!"
+	
+done
+echo "done!"
+
+
+echo "Create instances for evaluation > ${INSTANCE_NAME_EVALUATION}..."
+docker-machine create \
+	--driver amazonec2 \
+	--amazonec2-region "${REGION}" \
+	--amazonec2-security-group "${SECURITY_GROUP_NAME}" \
+	--amazonec2-instance-type "${INSTANCE_TYPE_EVALUATION}" \
+	"${INSTANCE_NAME_EVALUATION}"
+echo " done!"
+

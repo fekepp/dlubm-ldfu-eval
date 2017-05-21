@@ -1,0 +1,24 @@
+@prefix ex: <http://example.org/> .
+@prefix ldp: <http://www.w3.org/ns/ldp#> .
+@prefix step: <http://step.aifb.kit.edu/> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+
+
+{
+  ?factors 	ex:summand1 ?a ; #einfach um Zeilen erweitern
+			ex:summand2 ?b ;
+			ex:summand3 ?c ;
+			ex:summand4 ?d ;
+			ex:summand5 ?e .
+
+  (?a ?b) 		math:sum ?sum1 .
+  (?sum1 ?c) 	math:sum ?sum2 .
+  (?sum2 ?d) 	math:sum ?sum3 .
+  (?sum3 ?e) 	math:sum ?sum .
+} => {
+  ex:result ex:value ?sum .
+} .

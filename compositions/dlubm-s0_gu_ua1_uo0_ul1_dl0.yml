@@ -1,10 +1,10 @@
 networks:
   proxy:
-    external: {name: traefik_proxy}
+    external: {name: reverse_proxy}
 services:
   u0_dl0_ul1_uo0_ua1_gu_s0:
     deploy:
-      labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u0.dlubm.ddns.me']
+      labels: [traefik.docker.network=reverse_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u0.dlubm.ddns.me']
       placement:
         constraints: [node.role == worker]
     environment: ['DLUBM_ONTOLOGY=http://o.dlubm.ddns.me/univ-bench.owl', DLUBM_SEED=0,
@@ -14,11 +14,11 @@ services:
       DLUBM_HOST_DEPTH=UNIVERSITY, DLUBM_HOST_UNIVERSITY_AMOUNT=1, DLUBM_HOST_UNIVERSITY_OFFSET=0,
       DLUBM_HOST_DEPARTMENT_AMOUNT=0, DLUBM_HOST_DEPARTMENT_OFFSET=0]
     image: fekepp/dlubm:1.9.0-pr
-    labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u0.dlubm.ddns.me']
+    labels: [traefik.docker.network=reverse_proxy, traefik.port=80, 'traefik.frontend.rule=Host:u0.dlubm.ddns.me']
     networks: [proxy]
   g_dl0_ul1_uo0_ua1_gu_s0:
     deploy:
-      labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:g.dlubm.ddns.me,dlubm.ddns.me']
+      labels: [traefik.docker.network=reverse_proxy, traefik.port=80, 'traefik.frontend.rule=Host:g.dlubm.ddns.me,dlubm.ddns.me']
       placement:
         constraints: [node.role == worker]
     environment: ['DLUBM_ONTOLOGY=http://o.dlubm.ddns.me/univ-bench.owl', DLUBM_SEED=0,
@@ -28,11 +28,11 @@ services:
       DLUBM_HOST_DEPTH=GLOBAL, DLUBM_HOST_UNIVERSITY_AMOUNT=1, DLUBM_HOST_UNIVERSITY_OFFSET=0,
       DLUBM_HOST_DEPARTMENT_AMOUNT=0, DLUBM_HOST_DEPARTMENT_OFFSET=0]
     image: fekepp/dlubm:1.9.0-pr
-    labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:g.dlubm.ddns.me,dlubm.ddns.me']
+    labels: [traefik.docker.network=reverse_proxy, traefik.port=80, 'traefik.frontend.rule=Host:g.dlubm.ddns.me,dlubm.ddns.me']
     networks: [proxy]
   o_dl0_ul1_uo0_ua1_gu_s0:
     deploy:
-      labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:o.dlubm.ddns.me']
+      labels: [traefik.docker.network=reverse_proxy, traefik.port=80, 'traefik.frontend.rule=Host:o.dlubm.ddns.me']
       placement:
         constraints: [node.role == worker]
     environment: ['DLUBM_ONTOLOGY=http://o.dlubm.ddns.me/univ-bench.owl', DLUBM_SEED=0,
@@ -42,6 +42,6 @@ services:
       DLUBM_HOST_DEPTH=ONTOLOGY, DLUBM_HOST_UNIVERSITY_AMOUNT=0, DLUBM_HOST_UNIVERSITY_OFFSET=0,
       DLUBM_HOST_DEPARTMENT_AMOUNT=0, DLUBM_HOST_DEPARTMENT_OFFSET=0]
     image: fekepp/dlubm:1.9.0-pr
-    labels: [traefik.docker.network=traefik_proxy, traefik.port=80, 'traefik.frontend.rule=Host:o.dlubm.ddns.me']
+    labels: [traefik.docker.network=reverse_proxy, traefik.port=80, 'traefik.frontend.rule=Host:o.dlubm.ddns.me']
     networks: [proxy]
 version: '3'

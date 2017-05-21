@@ -1,0 +1,98 @@
+Falls er mit der Authentifizierung zickt, sollte einer davon gehen (Basic Authentification):
+http://localhost:8080/marmotta/user/anonymous und anonymous
+anonymous und anonymous
+http://localhost:8080/marmotta/user/admin und pass123
+admin und pass123
+1. den WebService1 erstellen:
+-------------------------------------------------------------------
+POST http://localhost:8080/marmotta/ldp/
+Accept: text/turtle
+Slug: WebService1
+Content-Type: text/turtle
+@prefix ldp: <http://www.w3.org/ns/ldp#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix parent: <http://localhost:8080/marmotta/ldp/> .
+@prefix child: <http://localhost:8080/marmotta/ldp/WebService1/> .
+@prefix this: <http://localhost:8080/marmotta/ldp/WebService1#> .
+<> a ldp:Resource , ldp:RDFSource , ldp:Container , ldp:BasicContainer ;
+        rdfs:label "This is WebService #1. It can do everything you like." ;
+	<http://step.aifb.kit.edu/hasStartAPI> child:start ;
+	<http://step.aifb.kit.edu/hasProgram> child:Program1.bin ;
+	a <http://step.aifb.kit.edu/LinkedDataWebService> .
+-------------------------------------------------------------------
+2. das Programm hinterlegen (euklidsche Distanz vom Nullpunkt ):
+-------------------------------------------------------------------
+POST http://localhost:8080/marmotta/ldp/WebService1
+Accept: text/turtle
+Slug: Program1
+Content-Type: text/notation3
+@prefix ex: <http://example.org/> .
+@prefix ldp: <http://www.w3.org/ns/ldp#> .
+@prefix step: <http://step.aifb.kit.edu/> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+[] ex:x "2" ; ex:y "3" ; ex:z "4" .
+{
+  ?point ex:x ?x ; ex:y ?y ; ex:z ?z .
+  (?x "2") math:exponentiation ?ex .
+  (?y "2") math:exponentiation ?ey .
+  (?z "2") math:exponentiation ?ez .
+  (?ex ?ey ?ez) math:sum ?sum .
+  ?sum math:sqrt ?sqrt .
+} => {
+  ex:result ex:value ?sqrt .
+} .
+-------------------------------------------------------------------
+2.a ein alternatives Programm (Summe von x und y, beide noch fix) :
+-------------------------------------------------------------------
+POST http://localhost:8080/marmotta/ldp/WebService1
+Accept: text/turtle
+Slug: Program1
+Content-Type: text/notation3
+@prefix ex: <http://example.org/> .
+@prefix ldp: <http://www.w3.org/ns/ldp#> .
+@prefix step: <http://step.aifb.kit.edu/> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+[] ex:x "2" ; ex:y "3" .
+{
+  ?factors ex:x ?x ; ex:y ?y .
+  (?x ?y) math:sum ?sum .
+} => {
+  ex:result ex:value ?sum .
+} .
+-------------------------------------------------------------------
+3. Die Start-Resource anlegen:
+-------------------------------------------------------------------
+POST http://localhost:8080/marmotta/ldp/WebService1
+Accept: text/turtle
+Slug: start
+Content-Type: text/turtle
+@prefix ex: <http://example.org/> .
+@prefix ldp: <http://www.w3.org/ns/ldp#> .
+@prefix step: <http://step.aifb.kit.edu/> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix parent: <http://localhost:8080/marmotta/ldp/> .
+<> a ldp:Resource ; a step:StartAPI ;
+     step:hasWebService parent:WebService1 ;
+     rdfs:label "This starts the WebService1" .
+-------------------------------------------------------------------
+4. Fertig
+-------------------------------------------------------------------
+5. Den Sevice aufrufen:
+-------------------------------------------------------------------
+POST http://localhost:8080/marmotta/ldp/WebService1/start
+Accept: text/turtle
+-------------------------------------------------------------------

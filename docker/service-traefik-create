@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#	--publish 8080:8080 \
+
+docker service create \
+	--name traefik \
+	--constraint=node.role==manager \
+	--publish 80:80 \
+	--publish 8080:8080 \
+	--publish 443:443 \
+	--mount type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock \
+	--network traefik_proxy \
+	traefik \
+	--docker \
+	--docker.swarmmode \
+	--docker.domain=swarm-1.ddns.me \
+	--docker.watch \
+	--web

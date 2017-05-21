@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker stack rm dlubm_s0_gu_ua5_uo0_ul1_dl0_scal_u

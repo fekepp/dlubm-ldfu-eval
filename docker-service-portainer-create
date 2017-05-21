@@ -1,0 +1,24 @@
+#!/bin/bash
+
+
+# Include configuration
+source configuration
+
+
+echo -n "Retrieve first manager instance name..."
+first_manager_instance_name="$(docker-machine ls -q | grep "dlubm-swarm-manager-[0-9]*0$")"
+echo " done! [${first_manager_instance_name}]"
+
+
+echo -n "Create service > Portainer..."
+container_id=$(docker-machine ssh ${first_manager_instance_name} \
+	"docker service create \
+		--name portainer \
+		--label traefik.port=9000 \
+		--network ${NETWORK_REVERSE_PROXY} \
+		--constraint 'node.role == manager' \
+		--mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+		portainer/portainer \
+			-H unix:///var/run/docker.sock")
+echo " done! [${container_id}]"
+

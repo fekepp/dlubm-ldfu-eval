@@ -1,8 +1,0 @@
-#!/bin/bash
-
-
-echo "Swarm > Services > Portainer > Remove service"
-docker-machine ssh dlubm-swarm-manager \
-	"docker service rm portainer"
-echo "Swarm > Services > Portainer > Removed service"
-

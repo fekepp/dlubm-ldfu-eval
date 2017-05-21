@@ -1,0 +1,27 @@
+#!/bin/bash
+
+
+# Currently, we are not yet using Docker containers for evaluation, but Docker Machine for convenience
+
+
+# Include configuration
+source configuration
+
+
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "sudo apt-get -y install aptitude"
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "sudo aptitude -y update"
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "sudo aptitude -y full-upgrade"
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "sudo aptitude -y install bc htop openjdk-8-jdk"
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "curl --location 'https://linked-data-fu.github.io/releases/0.9.11/linked-data-fu-standalone-0.9.11-bin.tar.gz' -o ldfu.tar.gz"
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "mkdir ldfu"
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "tar --strip-components=1 -xzf ldfu.tar.gz -C ldfu"
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "rm ldfu.tar.gz"
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "sudo rm -rf /usr/share/ldfu"
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "sudo mv ldfu /usr/share/"
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "sudo chown root:root /usr/share/ldfu"
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "sudo rm -f /usr/bin/ldfu"
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "sudo ln -s /usr/share/ldfu/bin/ldfu.sh /usr/bin/ldfu"
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "java -version"
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "ldfu -h"
+docker-machine ssh ${INSTANCE_NAME_EVALUATION} "sudo reboot"
+

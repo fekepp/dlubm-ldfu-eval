@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#	--publish 8080:8080 \
+
+docker service create \
+	--name step_einsatzdauer \
+	--label "traefik.docker.network=traefix_proxy" \
+	--label "traefik.port=8080" \
+	--label "traefik.frontend.rule=Host:einsatzdauer.step.ddns.me" \
+        --network traefik_proxy \
+	--with-registry-auth \
+	registry.gitlab.com/usu-research-step/einsatzdauer-service

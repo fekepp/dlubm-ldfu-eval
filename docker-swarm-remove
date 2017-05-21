@@ -1,0 +1,78 @@
+#!/bin/bash
+
+
+# Include configuration
+source configuration
+
+
+echo -n "Retrieve first manager instance name"
+first_manager_instance_name="$(docker-machine ls -q | grep "dlubm-swarm-manager-[0-9]*0$")"
+echo " > ${first_manager_instance_name}"
+
+
+echo -n "Retrieve manager instances names"
+manager_instance_names=$(docker-machine ls -q | grep "${INSTANCE_NAME_PREFIX_SWARM_MANAGER}")
+echo -e " > \n${manager_instance_names}"
+
+
+echo -n "Retrieve worker instances names"
+worker_instance_names=$(docker-machine ls -q | grep "${INSTANCE_NAME_PREFIX_SWARM_WORKER}")
+echo -e " > \n${worker_instance_names}"
+
+
+echo -n "Retrieve node list from manager"
+node_list=$(docker-machine ssh "${first_manager_instance_name}" "docker node ls")
+echo -e " >\n${node_list}"
+
+
+for worker_instance_name in ${worker_instance_names}
+do
+	
+	echo -n "Leave swarm with worker"
+	docker-machine ssh "${worker_instance_name}" "docker swarm leave" &> /dev/null
+	echo " > ${worker_instance_name}"
+	
+	echo -n "Remove worker from swarm"
+	docker-machine ssh "${first_manager_instance_name}" "docker node rm --force ${worker_instance_name}" &> /dev/null
+	echo " > ${worker_instance_name}"
+	
+done
+
+
+echo -n "Retrieve node list from manager"
+node_list=$(docker-machine ssh "${first_manager_instance_name}" "docker node ls")
+echo -e " >\n${node_list}"
+
+
+for manager_instance_name in ${manager_instance_names}
+do
+	
+	if [ "${manager_instance_name}" != "${first_manager_instance_name}" ]
+	then
+		
+		echo -n "Demote manager in swarm"
+		docker-machine ssh "${first_manager_instance_name}" "docker node demote ${manager_instance_name}" &> /dev/null
+		echo " > ${manager_instance_name}"
+		
+		echo -n "Leave swarm with manager"
+		docker-machine ssh "${manager_instance_name}" "docker swarm leave" &> /dev/null
+		echo " > ${manager_instance_name}"
+		
+		echo -n "Remove manager from swarm"
+		docker-machine ssh "${first_manager_instance_name}" "docker node rm --force ${manager_instance_name}" &> /dev/null
+		echo " > ${manager_instance_name}"
+		
+	fi
+	
+done
+
+
+echo -n "Retrieve node list from manager"
+node_list=$(docker-machine ssh "${first_manager_instance_name}" "docker node ls")
+echo -e " >\n${node_list}"
+
+
+echo -n "Remove first manager from swarm"
+docker-machine ssh "${first_manager_instance_name}" "docker swarm leave --force" &> /dev/null
+echo " > ${first_manager_instance_name}"
+

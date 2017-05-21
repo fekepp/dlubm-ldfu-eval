@@ -1,9 +1,0 @@
-#!/bin/bash
-
-
-# Currently, we are not yet using Docker containers for evaluation, but Docker Machine for convenience
-
-
-echo "Swarm > Remove machine"
-docker-machine rm -y $(docker-machine ls -q | grep dlubm-eval)
-echo "Swarm > Removed machine"

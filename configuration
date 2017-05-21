@@ -1,0 +1,49 @@
+#!/bin/bash
+
+
+##
+## Composition
+##
+
+# Domain
+DOMAIN="dlubm.ddns.me"
+
+# Networks
+NETWORK_REVERSE_PROXY="reverse_proxy"
+
+
+##
+## Deployment
+##
+
+# Region
+REGION="eu-central-1"
+
+# Security group
+SECURITY_GROUP_NAME="dlubm-swarm"
+SECURITY_GROUP_DESCRIPTION="DLUBM Evaluation"
+
+# Instance amounts
+INSTANCE_AMOUNT_SWARM_MANAGER="3"
+INSTANCE_AMOUNT_SWARM_WORKER="12"
+
+# Instance types
+# t2.micro
+# t2.small
+# t2.medium
+# m4.xlarge
+# c4.8xlarge
+INSTANCE_TYPE_SWARM_MANAGER="t2.small"
+INSTANCE_TYPE_SWARM_WORKER="t2.small"
+INSTANCE_TYPE_EVALUATION="m4.xlarge"
+
+# Instance names
+INSTANCE_NAME_PREFIX_SWARM_MANAGER="dlubm-swarm-manager-"
+INSTANCE_NAME_PREFIX_SWARM_WORKER="dlubm-swarm-worker-"
+INSTANCE_NAME_EVALUATION="dlubm-evaluation"
+
+# Machine images
+# ami-107ba77f | RancherOS 1.0.1
+AMI="ami-107ba77f"
+SSH_USER="rancher"
+

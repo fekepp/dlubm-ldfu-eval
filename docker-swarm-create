@@ -1,0 +1,94 @@
+#!/bin/bash
+
+
+# Include configuration
+source configuration
+
+
+echo -n "Retrieve first manager instance name"
+first_manager_instance_name="$(docker-machine ls -q | grep "dlubm-swarm-manager-[0-9]*0$")"
+echo " > ${first_manager_instance_name}"
+
+
+echo -n "Retrieve manager instances names"
+manager_instance_names=$(docker-machine ls -q | grep "${INSTANCE_NAME_PREFIX_SWARM_MANAGER}")
+echo -e " > \n${manager_instance_names}"
+
+
+echo -n "Retrieve worker instances names"
+worker_instance_names=$(docker-machine ls -q | grep "${INSTANCE_NAME_PREFIX_SWARM_WORKER}")
+echo -e " > \n${worker_instance_names}"
+
+
+for manager_instance_name in ${manager_instance_names}
+do
+	
+	echo -n "Retrieve internal manager IP > ${manager_instance_name}"
+	manager_ip_internal=$(docker-machine ssh "${manager_instance_name}" "ifconfig eth0 | grep 'inet addr' | cut -d ':' -f 2 | cut -d ' ' -f 1")
+	echo " > ${manager_ip_internal}"
+	
+	echo -n "Retrieve external manager IP > ${manager_instance_name}"
+	manager_ip_external=$(docker-machine ip "${manager_instance_name}")
+	echo " > ${manager_ip_external}"
+
+	if [ "${manager_instance_name}" == "${first_manager_instance_name}" ]
+	then
+		
+		echo -n "Initialize first swarm manager"
+		docker-machine ssh "${manager_instance_name}" "docker swarm init \
+			--listen-addr $(docker-machine ssh "${manager_instance_name}" "ifconfig eth0 | grep 'inet addr' | cut -d ':' -f 2 | cut -d ' ' -f 1") \
+			--advertise-addr $(docker-machine ssh "${manager_instance_name}" "ifconfig eth0 | grep 'inet addr' | cut -d ':' -f 2 | cut -d ' ' -f 1")" \
+			&> /dev/null
+		echo " > ${manager_instance_name}"
+		
+		echo -n "Retrieve manager token"
+		manager_token=$(docker-machine ssh "${manager_instance_name}" "docker swarm join-token worker -q")
+		echo " > ${manager_token}"
+		
+		echo -n "Retrieve worker token"
+		worker_token=$(docker-machine ssh "${manager_instance_name}" "docker swarm join-token worker -q")
+		echo " > ${worker_token}"
+		
+	else
+		
+		echo -n "Join swarm with manager"
+		docker-machine ssh "${manager_instance_name}" "docker swarm join \
+			--token=$(docker-machine ssh "${first_manager_instance_name}" "docker swarm join-token manager -q") \
+			--listen-addr $(docker-machine ssh "${manager_instance_name}" "ifconfig eth0 | grep 'inet addr' | cut -d ':' -f 2 | cut -d ' ' -f 1") \
+			--advertise-addr $(docker-machine ssh "${manager_instance_name}" "ifconfig eth0 | grep 'inet addr' | cut -d ':' -f 2 | cut -d ' ' -f 1") \
+			$(docker-machine ssh "${first_manager_instance_name}" "ifconfig eth0 | grep 'inet addr' | cut -d ':' -f 2 | cut -d ' ' -f 1")" \
+			&> /dev/null
+		echo " > ${manager_instance_name}"
+		
+	fi
+	
+done
+
+
+for worker_instance_name in ${worker_instance_names}
+do
+	
+	echo -n "Retrieve internal worker IP > ${worker_instance_name}"
+	worker_ip_internal=$(docker-machine ssh "${worker_instance_name}" "ifconfig eth0 | grep 'inet addr' | cut -d ':' -f 2 | cut -d ' ' -f 1")
+	echo " > ${worker_ip_internal}"
+	
+	echo -n "Retrieve external worker IP > ${worker_instance_name}"
+	worker_ip_external=$(docker-machine ip "${worker_instance_name}")
+	echo " > ${worker_ip_external}"
+	
+	echo -n "Join swarm with worker"
+	docker-machine ssh "${worker_instance_name}" "docker swarm join \
+		--token=$(docker-machine ssh "${first_manager_instance_name}" "docker swarm join-token worker -q") \
+		--listen-addr $(docker-machine ssh "${worker_instance_name}" "ifconfig eth0 | grep 'inet addr' | cut -d ':' -f 2 | cut -d ' ' -f 1") \
+		--advertise-addr $(docker-machine ssh "${worker_instance_name}" "ifconfig eth0 | grep 'inet addr' | cut -d ':' -f 2 | cut -d ' ' -f 1") \
+		$(docker-machine ssh "${first_manager_instance_name}" "ifconfig eth0 | grep 'inet addr' | cut -d ':' -f 2 | cut -d ' ' -f 1")" \
+		&> /dev/null
+	echo " > ${worker_instance_name}"
+	
+done
+
+
+echo -n "Retrieve node list from manager"
+node_list=$(docker-machine ssh "${first_manager_instance_name}" "docker node ls")
+echo -e " >\n${node_list}"
+

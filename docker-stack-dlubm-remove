@@ -1,0 +1,26 @@
+#!/bin/bash
+
+
+# Include configuration
+source configuration
+
+
+echo -n "Retrieve first manager instance name..."
+first_manager_instance_name="$(docker-machine ls -q | grep "dlubm-swarm-manager-[0-9]*0$")"
+echo " done! [${first_manager_instance_name}]"
+
+
+echo -n "Switch environment to first manager instance..."
+eval $(docker-machine env ${first_manager_instance_name})
+echo "done! [${first_manager_instance_name}]"
+
+
+echo "Remove stack > DLUBM..."
+docker stack rm dlubm
+echo "done!"
+
+
+echo -n "Switch environment back to local..."
+eval $(docker-machine env --unset)
+echo " done!"
+

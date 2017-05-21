@@ -1,0 +1,24 @@
+#!/bin/bash
+
+
+# Include configuration
+source configuration
+
+
+# Retrieve ID of existing security group with name ${SECURITY_GROUP_NAME}
+sgid=$(aws ec2 describe-security-groups --group-name "${SECURITY_GROUP_NAME}" --query "SecurityGroups[0].GroupId" --output text 2> /dev/null)
+
+
+# Check if ID of security group is existing
+if [ "${sgid}" != "" ]
+then
+	
+	echo "Delete existing security group > ${sgid}"
+	aws ec2 delete-security-group --group-id "${sgid}"
+	echo "Deleted existing security group"
+	
+else
+	echo "Failed to find ID for security group > ${SECURITY_GROUP_NAME}"
+	exit 1
+fi
+

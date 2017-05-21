@@ -1,0 +1,71 @@
+#!/bin/bash
+
+
+# Include configuration
+source configuration
+
+
+# Retrieve ID of default VPC
+vpcid=$(aws ec2 describe-vpcs --filters "Name=isDefault,Values=true" --query "Vpcs[0].VpcId" --output text)
+
+# Retrieve ID of existing security group with name ${SECURITY_GROUP_NAME}
+sgid=$(aws ec2 describe-security-groups --group-name "${SECURITY_GROUP_NAME}" --query "SecurityGroups[0].GroupId" --output text 2> /dev/null)
+
+
+# Check if ID of default VPC is existing
+if [ "${vpcid}" != "" ]
+then
+	echo "Found default VPC > ${vpcid}"
+else
+	echo "Failed to find default VPC"
+	exit 1
+fi
+
+
+# Check if ID of security group is existing
+if [ "${sgid}" == "" ]
+then
+	
+	echo "Create new security group"
+	sgid=$(aws ec2 create-security-group --group-name "${SECURITY_GROUP_NAME}" --description "${SECURITY_GROUP_DESCRIPTION}" --vpc-id "${vpcid}")
+	echo "Created new security group > ${sgid} | ${SECURITY_GROUP_NAME}"
+	
+	# Open ports required for access
+	#
+	# TCP port 22 for SSH
+	# TCP port 80 for HTTP
+	# TCP port 8080 for HTTP
+	echo "Open ports for SSH and HTTP communication"
+	aws ec2 authorize-security-group-ingress --group-name "${SECURITY_GROUP_NAME}" --protocol tcp --port 22 --cidr 0.0.0.0/0
+	aws ec2 authorize-security-group-ingress --group-name "${SECURITY_GROUP_NAME}" --protocol tcp --port 80 --cidr 0.0.0.0/0
+	aws ec2 authorize-security-group-ingress --group-name "${SECURITY_GROUP_NAME}" --protocol tcp --port 8080 --cidr 0.0.0.0/0
+	echo "Opened ports for SSH and HTTP communication"
+	
+	# Open ports required for communication with the Docker engine
+	#
+	# https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option
+	#
+	# TCP port 2375 for un-encrypted communication with the daemon
+	# TCP port 2376 for encrypted communication with the daemon
+	echo "Open ports for Docker communication"
+	aws ec2 authorize-security-group-ingress --group-name "${SECURITY_GROUP_NAME}" --protocol tcp --port 2376 --cidr 0.0.0.0/0
+	echo "Opened ports for Docker communication"
+	
+	# Open ports required for communication within the Docker Swarm
+	#
+	# https://docs.docker.com/engine/swarm/swarm-tutorial/#open-protocols-and-ports-between-the-hosts
+	# 
+	# TCP port 2377 for cluster management communications
+	# UDP port 4789 for overlay network traffic
+	# TCP and UDP port 7946 for communication among nodes
+	echo "Open ports for Docker Swarm communication"
+	aws ec2 authorize-security-group-ingress --group-name "${SECURITY_GROUP_NAME}" --protocol tcp --port 2377 --cidr 0.0.0.0/0
+	aws ec2 authorize-security-group-ingress --group-name "${SECURITY_GROUP_NAME}" --protocol udp --port 4789 --cidr 0.0.0.0/0
+	aws ec2 authorize-security-group-ingress --group-name "${SECURITY_GROUP_NAME}" --protocol tcp --port 7946 --cidr 0.0.0.0/0
+	aws ec2 authorize-security-group-ingress --group-name "${SECURITY_GROUP_NAME}" --protocol udp --port 7946 --cidr 0.0.0.0/0
+	echo "Opened ports for Docker Swarm communication"
+	
+else
+	echo "Found existing security group > ${sgid} | ${SECURITY_GROUP_NAME}"
+fi
+
