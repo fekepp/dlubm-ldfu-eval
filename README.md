@@ -19,7 +19,8 @@ Following steps are required to configure, deploy, evaluate, and terminate the D
 While everything could be handled by two or three scripts, these are split for better readability in smaller scripts that handle related functionality.
 
 ### Configuration
-See `configuration` file.
+AWS CLI must be configured with appropriate credentials.
+For configuring the environment, check the `configuration` file.
 ### Deployment
 #### Create AWS EC2 Security Group
 Create the AWS EC2 security group.
