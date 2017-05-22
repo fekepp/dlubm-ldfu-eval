@@ -94,7 +94,7 @@ Retrieve instance IP adresses.
 ----
 Retrieve instance IP adresses and update the dynamic DNS domain entry to point to an external IP of the swarm, e.g., the first manager instance.
 
-**Important:** The domain must be the domain set in the configuration and must have wildcard enabled. If not, you must remove the stack and reverse proxy service, update the configuration, re-create the composition, recreate the reverse proxy service, and redeploy the stack.
+**Important:** The domain must be the domain set in the configuration and must have wildcard enabled. If not, you must remove the stack and reverse proxy service, update the configuration, recreate the composition, recreate the reverse proxy service, and redeploy the stack.
 
 Check if the environment is working by resolving the domain in a browser. Port 80 should provide the global university links and port 8080 should provide an overview about the routing of Traefik.
 
