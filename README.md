@@ -42,6 +42,8 @@ AWS CLI must be configured with appropriate credentials, i.e., secret key id and
 
     $ aws configure
 
+If you are not familiar with AWS and in particular AWS EC2, take a look at [AWS Getting Started](https://aws.amazon.com/documentation/gettingstarted/) and [AWS EC2 Getting Started](https://aws.amazon.com/ec2/getting-started/).
+
 #### Environment
 For configuring the environment, create the `configuration` file by either copying the `configuration.example` file or creating a new one based on the example file.
 
