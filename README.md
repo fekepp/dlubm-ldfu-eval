@@ -15,8 +15,9 @@
 * [Docker Documentation Engine Swarm Protocols and Ports](https://docs.docker.com/engine/swarm/swarm-tutorial/#open-protocols-and-ports-between-the-hosts)
 
 ## Usage
-Following steps are required to configure, deploy, evaluate, and terminate the DLUBM environment.
+Following steps are required to configure, deploy, and terminate the DLUBM environment.
 While everything could be handled by two or three scripts, these are split for better readability in smaller scripts that handle related functionality.
+In addition, LD-Fu is evaluated against the DLBM environment.
 
 ### Configuration
 AWS CLI must be configured with appropriate credentials.
