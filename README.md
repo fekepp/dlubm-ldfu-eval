@@ -17,8 +17,10 @@
 ### Dynamic DNS
 A reverse proxy in combination with a wildcard-enabled dynamic DNS domain entry are utilized to ease the deployment.
 Therefore, a configurable domain entry is required, for example, provide by
+
 * [No-IP](https://www.noip.com/remote-access)
 * [Dyn](https://dyn.com/dns)
+
 or similar providers.
 
 ## Usage
