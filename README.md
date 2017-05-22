@@ -14,14 +14,31 @@
 * [Docker Documentation Engine Reference Docker Daemon Socket Options](https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option)
 * [Docker Documentation Engine Swarm Protocols and Ports](https://docs.docker.com/engine/swarm/swarm-tutorial/#open-protocols-and-ports-between-the-hosts)
 
+### Dynamic DNS
+A reverse proxy in combination with a wildcard-enabled dynamic DNS domain entry are utilized to ease the deployment.
+Therefore, a configurable domain entry is required, for example, provide by
+* [No-IP](https://www.noip.com/remote-access)
+* [Dyn](https://dyn.com/dns)
+or similar providers.
+
 ## Usage
 Following steps are required to configure, deploy, and terminate the DLUBM environment.
 While everything could be handled by two or three scripts, these are split for better readability in smaller scripts that handle related functionality.
 In addition, LD-Fu is evaluated against the DLBM environment.
 
 ### Configuration
+#### AWS CLI
 AWS CLI must be configured with appropriate credentials.
-For configuring the environment, check the `configuration` file.
+
+#### Environment
+For configuring the environment, create the `configuration` file by either copying the `configuration.example` file or creating a new one based on the example file.
+
+Configuration parameters:
+
+* DOMAIN
+    * The domain entry. **Important:** This entry must correspond to the dynamic DNS domain entry with enabled wildcard. The composition is generated with respect to this domain entry and in addition the reverse proxy service is configured to handle requests to this domain as well as subdomains.
+* TODO
+
 ### Deployment
 #### Create AWS EC2 Security Group
 Create the AWS EC2 security group.
