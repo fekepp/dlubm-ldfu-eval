@@ -62,6 +62,14 @@ Assemble the Docker Swarm.
 ----
 Assemble the Docker Swarm by, initializing the Swarm with the first manager instance, then joining the Swarm with all other manager instances as managers, and last joining the Swarm with all worker instances as workers.
 
+#### Create Reverse Proxy Network
+Create the reverse proxy network.
+
+    $ ./docker-network-reverseproxy-create
+
+----
+Create the reverse proxy network that will be used by the reverse proxy container and all othercontainers.
+
 #### Create Traefik Service
 Create the Traefik service.
 
@@ -102,6 +110,11 @@ Remove the DLUBM stack.
 Remove the Traefik service.
 
     $ ./docker-service-traefik-remove
+
+#### Remove Reverse Proxy Network
+Create the reverse proxy network.
+
+    $ ./docker-network-reverseproxy-remove
 
 #### Disassemble Docker Swarm
 Disassemble the Docker Swarm.
