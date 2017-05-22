@@ -1,6 +1,11 @@
 # DLUBM LD-Fu Evaluation
 ## Requirements
 ### AWC CLI
+The Amazon Web Services (AWS) Command Line Interface (CLI) is utilized to create and configure a security group for our environment.
+By adding inbound rules for specific ports, we enable access to instances and communication within Docker Swarms.
+In addition, Docker Machine uses AWS CLI credentials to connect to AWS EC2.
+Documentation is provided, for example, at:
+
 * [AWS](https://aws.amazon.com/)
 * [AWS CLI](https://aws.amazon.com/cli/)
 * [AWS CLI User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)
@@ -8,7 +13,10 @@
 * [AWS CLI User Guide Configuration](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
 * [AWS EC2 User Guide Network Security](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html)
 
-### Docker & Docker Machine
+### Docker Machine
+The Docker Machine tool is utilized to handle the management of dockerized EC2 instances.
+Documentation is provided, for example, at:
+
 * [Docker](https://docker.com/)
 * [Docker Documentation Machine](https://docs.docker.com/machine/)
 * [Docker Documentation Engine Reference Docker Daemon Socket Options](https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option)
@@ -16,7 +24,7 @@
 
 ### Dynamic DNS
 A reverse proxy in combination with a wildcard-enabled dynamic DNS domain entry are utilized to ease the deployment.
-Therefore, a configurable domain entry is required, for example, provide by
+Therefore, a configurable domain entry is required, for example, provided by
 
 * [No-IP](https://www.noip.com/remote-access)
 * [Dyn](https://dyn.com/dns)
@@ -30,7 +38,9 @@ In addition, LD-Fu is evaluated against the DLBM environment.
 
 ### Configuration
 #### AWS CLI
-AWS CLI must be configured with appropriate credentials.
+AWS CLI must be configured with appropriate credentials, i.e., secret key id and secret access key, for a user that is permit to manage EC2 security groups and instances.
+
+    $ aws configure
 
 #### Environment
 For configuring the environment, create the `configuration` file by either copying the `configuration.example` file or creating a new one based on the example file.
