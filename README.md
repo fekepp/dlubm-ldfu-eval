@@ -94,12 +94,15 @@ Prepare the evaluation instance.
 
 ----
 Prepare the evaluation instance by installing all required dependencies and LD-Fu.
+Note that the instance restarts after preparation.
 
 #### Execute Experiment
-Execute the experiment against the deployed DLUBM instance.
+Execute the experiment.
 
     $ ./evaluation-experiment
 
+----
+Execute the experiment against the deployed DLUBM instance.
 ### Termination
 #### Remove DLUBM Stack
 Remove the DLUBM stack.
