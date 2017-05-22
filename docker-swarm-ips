@@ -1,0 +1,49 @@
+#!/bin/bash
+
+
+# Include configuration
+source configuration
+
+
+echo -n "Retrieve first manager instance name"
+first_manager_instance_name="$(docker-machine ls -q | grep "dlubm-swarm-manager-[0-9]*0$")"
+echo " > ${first_manager_instance_name}"
+
+
+echo -n "Retrieve manager instances names"
+manager_instance_names=$(docker-machine ls -q | grep "${INSTANCE_NAME_PREFIX_SWARM_MANAGER}")
+echo -e " > \n${manager_instance_names}"
+
+
+echo -n "Retrieve worker instances names"
+worker_instance_names=$(docker-machine ls -q | grep "${INSTANCE_NAME_PREFIX_SWARM_WORKER}")
+echo -e " > \n${worker_instance_names}"
+
+
+for manager_instance_name in ${manager_instance_names}
+do
+	
+	echo -n "Retrieve internal manager IP > ${manager_instance_name}"
+	manager_ip_internal=$(docker-machine ssh "${manager_instance_name}" "ifconfig eth0 | grep 'inet addr' | cut -d ':' -f 2 | cut -d ' ' -f 1")
+	echo " > ${manager_ip_internal}"
+	
+	echo -n "Retrieve external manager IP > ${manager_instance_name}"
+	manager_ip_external=$(docker-machine ip "${manager_instance_name}")
+	echo " > ${manager_ip_external}"
+	
+done
+
+
+for worker_instance_name in ${worker_instance_names}
+do
+	
+	echo -n "Retrieve internal worker IP > ${worker_instance_name}"
+	worker_ip_internal=$(docker-machine ssh "${worker_instance_name}" "ifconfig eth0 | grep 'inet addr' | cut -d ':' -f 2 | cut -d ' ' -f 1")
+	echo " > ${worker_ip_internal}"
+	
+	echo -n "Retrieve external worker IP > ${worker_instance_name}"
+	worker_ip_external=$(docker-machine ip "${worker_instance_name}")
+	echo " > ${worker_ip_external}"
+	
+done
+
