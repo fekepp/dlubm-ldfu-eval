@@ -70,13 +70,14 @@ Create the reverse proxy network.
 ----
 Create the reverse proxy network that will be used by the reverse proxy container and all othercontainers.
 
-#### Create Traefik Service
-Create the Traefik service.
+#### Create Reverse Proxy Service
+Create the reverse proxy service.
 
     $ ./docker-service-traefik-create
 
 ----
-Create the Traefik service that is restricted to run at a manager node.
+Create the reverse proxy service  we utilize Traefik.
+The service is restricted to run at a manager node to retrieve required metadata.
 
 #### Deploy DLUBM Stack
 Deploy the DLUBM stack.
@@ -85,6 +86,17 @@ Deploy the DLUBM stack.
 
 ----
 Deploy the DLUBM stack by setting the Docker environment to a Docker Swarm manager and deploying the DLUBM stack.
+#### Update Dynamic DNS
+Retrieve instance IP adresses.
+
+    $ ./docker-swarm-ips
+
+----
+Retrieve instance IP adresses and update the dynamic DNS domain entry to point to an external IP of the swarm, e.g., the first manager instance.
+
+**Important:** The domain must be the domain set in the configuration and must have wildcard enabled. If not, you must remove the stack and reverse proxy service, update the configuration, re-create the composition, recreate the reverse proxy service, and redeploy the stack.
+
+Check if the environment is working by resolving the domain in a browser. Port 80 should provide the global university links and port 8080 should provide an overview about the routing of Traefik.
 
 ### Evaluation
 #### Prepare Evaluation Instance
