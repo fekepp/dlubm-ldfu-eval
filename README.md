@@ -68,13 +68,13 @@ Deploy the DLUBM environment.
 Actions:
 
 1. Creates an AWS EC2 security group with inbound rules for required ports
-* Starts the AWS EC2 instances in configured amounts and with configured types
-* Prepares the evaluation instance by setting up the system for experiments
-* Assembles the Docker Swarm by initiating the first manager node and joining with further managers als well as worker nodes
-* Creates an overlay network used by the reverse proxy for directing requests at (sub)domains to responsible containers
-* Creates the reverse proxy service, currently a Traefik reverse proxy
-* Deploys the DLUBM stack, i.e., deploys the composition generated beforehand to the Docker Swarm
-* Lists all internal and external IPs of Docker Swarm nodes
+1. Starts the AWS EC2 instances in configured amounts and with configured types
+1. Prepares the evaluation instance by setting up the system for experiments
+1. Assembles the Docker Swarm by initiating the first manager node and joining with further managers als well as worker nodes
+1. Creates an overlay network used by the reverse proxy for directing requests at (sub)domains to responsible containers
+1. Creates the reverse proxy service, currently a Traefik reverse proxy
+1. Deploys the DLUBM stack, i.e., deploys the composition generated beforehand to the Docker Swarm
+1. Lists all internal and external IPs of Docker Swarm nodes
 
 ----
 Update the Dynamic DNS domain entry.
