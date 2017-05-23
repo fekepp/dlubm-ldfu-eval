@@ -211,6 +211,7 @@ Deploy the DLUBM stack.
 
 ----
 Deploy the DLUBM stack by setting the Docker environment to a Docker Swarm manager and deploying the DLUBM stack that has been previously generated and saved in the *docker-compose.yml* file.
+
 #### Update Dynamic DNS
 Retrieve instance IP adresses.
 
