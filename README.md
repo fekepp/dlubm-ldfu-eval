@@ -56,26 +56,53 @@ Compose the environment.
 
     $ ./compose
 
-----
-Update the Dynamic DNS domain entry.
-Use an external IP of an instance, for example, of the first manager of the Docker Swarm.
+Actions:
 
-    $ ./scripts/docker-swarm-ips
+1. Generates based on the configuration a composition of containers saved in the file *docker-compose.yml*
 
 ----
 Deploy the DLUBM environment.
 
     $ ./deploy
 
+Actions:
+
+1. Creates an AWS EC2 security group with inbound rules for required ports
+* Starts the AWS EC2 instances in configured amounts and with configured types
+* Prepares the evaluation instance by setting up the system for experiments
+* Assembles the Docker Swarm by initiating the first manager node and joining with further managers als well as worker nodes
+* Creates an overlay network used by the reverse proxy for directing requests at (sub)domains to responsible containers
+* Creates the reverse proxy service, currently a Traefik reverse proxy
+* Deploys the DLUBM stack, i.e., deploys the composition generated beforehand to the Docker Swarm
+* Lists all internal and external IPs of Docker Swarm nodes
+
+----
+Update the Dynamic DNS domain entry.
+Use an external IP of an instance, for example, of the first manager of the Docker Swarm.
+
+    $ ./scripts/docker-swarm-ips
+
+Actions:
+
+1. Lists all internal and external IPs of Docker Swarm nodes
+
 ----
 Evaluate LD-Fu against the DLUBM environment.
 
     $ ./evaluate
 
+Actions:
+
+1. Evaluates by copying all required files to the evaluation instance, executing the experiments, and copying all files, including the results, back to the local machine
+
 ----
 Terminate the DLUBM environment.
 
     $ ./terminate
+
+Actions:
+
+* Executes all actions of the deploy step in reverse order
 
 
 
