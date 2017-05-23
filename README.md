@@ -46,7 +46,7 @@ Copy the example configuration file as base.
 
     $ cp configuration.example configuration
 
-Edit the configuration file and update at least the *DOMAIN* parameter with the Dynamic DNS domain entry.
+Edit the configuration file and set at least the *DOMAIN* parameter with the Dynamic DNS domain entry.
 Take a look at the amount and type of EC2 instances to be initialized as well as the configuration of the DLUBM.
 With the current example configuration, one EC2 instance of type *t2.small* for evaluation, one EC2 instance of type *m4.xlarge* for a Swarm Manager, and 18 EC2 instances of type *t2.small* for Docker Swarm workers are initiated that host a DLUBM with 100 containers.
 Currently, the amount of 20 EC2 instances is the maximum for instances running in parallel without requesting a limit increase.
