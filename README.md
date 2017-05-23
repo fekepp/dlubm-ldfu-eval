@@ -184,7 +184,7 @@ Assemble the Docker Swarm.
     $ ./scripts/docker-swarm-assemble
 
 ----
-Assemble the Docker Swarm by, initializing the Swarm with the first manager instance, then joining the Swarm with all other manager instances as managers, and last joining the Swarm with all worker instances as workers.
+Assemble the Docker Swarm by initializing the Swarm with the first manager instance, then joining the Swarm with all other manager instances as managers, and last joining the Swarm with all worker instances as workers.
 
 #### Create Reverse Proxy Network
 Create the reverse proxy network.
