@@ -103,7 +103,7 @@ Terminate the DLUBM environment.
 Actions:
 
 * Executes all actions of the deploy step in reverse order
-
+    * Currently, the security group is not automatically removed but must be removed manually later once all instances are terminated
 
 
 
