@@ -133,6 +133,9 @@ Generate the DLUBM Composition.
 
     $ ./scripts/dlubm-compose
 
+----
+Generate the DLUBM Composition that will be saved in the *docker-compose.yml* file.
+
 ### Deployment
 #### Create AWS EC2 Security Group
 Create the AWS EC2 security group.
