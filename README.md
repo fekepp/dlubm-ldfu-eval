@@ -232,6 +232,8 @@ Execute the experiment.
 
 ----
 Execute the experiment against the deployed DLUBM instance.
+First, all required files are copied to the evaluation instance, then the experiments are executed at the evaluation instance, and afterwards all files, including the results, are copeid back to the local machine and stored in the experiments directory.
+
 ### Termination
 #### Remove DLUBM Stack
 Remove the DLUBM stack.
