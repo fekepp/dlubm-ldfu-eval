@@ -15,6 +15,12 @@ docker-machine scp -r programs ${INSTANCE_NAME_EVALUATION}:~/experiment
 docker-machine scp -r queries ${INSTANCE_NAME_EVALUATION}:~/experiment
 docker-machine scp -r rulesets ${INSTANCE_NAME_EVALUATION}:~/experiment
 docker-machine scp -r scripts ${INSTANCE_NAME_EVALUATION}:~/experiment
+docker-machine scp configuration ${INSTANCE_NAME_EVALUATION}:~/experiment
+docker-machine scp configuration.example ${INSTANCE_NAME_EVALUATION}:~/experiment
+docker-machine scp compose ${INSTANCE_NAME_EVALUATION}:~/experiment
+docker-machine scp deploy ${INSTANCE_NAME_EVALUATION}:~/experiment
+docker-machine scp evaluate ${INSTANCE_NAME_EVALUATION}:~/experiment
+docker-machine scp terminate ${INSTANCE_NAME_EVALUATION}:~/experiment
 
 docker-machine ssh ${INSTANCE_NAME_EVALUATION} "cd ~/experiment && ./scripts/experiment"
 

@@ -32,7 +32,7 @@ Therefore, a configurable domain entry is required, for example, provided by
 or similar providers.
 
 ## Usage
-Following steps are required to configure, deploy, and terminate the DLUBM environment.
+Following steps are required to configure, compose, deploy, and terminate the DLUBM environment.
 While everything could be handled by two or three scripts, these are split for better readability in smaller scripts that handle related functionality.
 In addition, LD-Fu is evaluated against the DLBM environment.
 
@@ -57,13 +57,13 @@ Configuration parameters:
 #### Generate DLUBM Composition
 Generate the DLUBM Composition.
 
-    $ ./dlubm-compose
+    $ ./scripts/dlubm-compose
 
 ### Deployment
 #### Create AWS EC2 Security Group
 Create the AWS EC2 security group.
 
-    $ ./awsec2-securitygroup-create
+    $ ./scripts/awsec2-securitygroup-create
 
 ----
 Create the AWS EC2 security group to be used by Docker Swarm instances and the evaluation instance.
@@ -84,17 +84,27 @@ Following ports are opened:
 #### Start AWS EC2 Instances
 Start the AWS EC2 instances.
 
-    $ ./awsec2-instances-start
+    $ ./scripts/awsec2-instances-start
 
 ----
 Start AWS EC2 instances according to the configuration.
 First, instances for Docker Swarm managers are created, then instances for Docker Swarm workers, and then the instance for evaluation.
 The security group created above is assigned to all instances.
 
+#### Prepare Evaluation Instance
+Prepare the evaluation instance.
+
+    $ ./scripts/evaluation-preparation
+
+----
+Prepare the evaluation instance by installing all required dependencies and LD-Fu.
+Note that the instance restarts after preparation.
+
+
 #### Assemble Docker Swarm
 Assemble the Docker Swarm.
 
-    $ ./docker-swarm-assemble
+    $ ./scripts/docker-swarm-assemble
 
 ----
 Assemble the Docker Swarm by, initializing the Swarm with the first manager instance, then joining the Swarm with all other manager instances as managers, and last joining the Swarm with all worker instances as workers.
@@ -102,7 +112,7 @@ Assemble the Docker Swarm by, initializing the Swarm with the first manager inst
 #### Create Reverse Proxy Network
 Create the reverse proxy network.
 
-    $ ./docker-network-reverseproxy-create
+    $ ./scripts/docker-network-reverseproxy-create
 
 ----
 Create the reverse proxy network that will be used by the reverse proxy container and all othercontainers.
@@ -110,7 +120,7 @@ Create the reverse proxy network that will be used by the reverse proxy containe
 #### Create Reverse Proxy Service
 Create the reverse proxy service.
 
-    $ ./docker-service-traefik-create
+    $ ./scripts/docker-service-traefik-create
 
 ----
 Create the reverse proxy service  we utilize Traefik.
@@ -119,14 +129,14 @@ The service is restricted to run at a manager node to retrieve required metadata
 #### Deploy DLUBM Stack
 Deploy the DLUBM stack.
 
-    $ ./docker-stack-dlubm-deploy
+    $ ./scripts/docker-stack-dlubm-deploy
 
 ----
 Deploy the DLUBM stack by setting the Docker environment to a Docker Swarm manager and deploying the DLUBM stack.
 #### Update Dynamic DNS
 Retrieve instance IP adresses.
 
-    $ ./docker-swarm-ips
+    $ ./scripts/docker-swarm-ips
 
 ----
 Retrieve instance IP adresses and update the dynamic DNS domain entry to point to an external IP of the swarm, e.g., the first manager instance.
@@ -136,19 +146,10 @@ Retrieve instance IP adresses and update the dynamic DNS domain entry to point t
 Check if the environment is working by resolving the domain in a browser. Port 80 should provide the global university links and port 8080 should provide an overview about the routing of Traefik.
 
 ### Evaluation
-#### Prepare Evaluation Instance
-Prepare the evaluation instance.
-
-    $ ./evaluation-preparation
-
-----
-Prepare the evaluation instance by installing all required dependencies and LD-Fu.
-Note that the instance restarts after preparation.
-
 #### Execute Experiment
 Execute the experiment.
 
-    $ ./evaluation-experiment
+    $ ./scripts/evaluation-experiment
 
 ----
 Execute the experiment against the deployed DLUBM instance.
@@ -156,29 +157,29 @@ Execute the experiment against the deployed DLUBM instance.
 #### Remove DLUBM Stack
 Remove the DLUBM stack.
 
-    $ ./docker-stack-dlubm-remove
+    $ ./scripts/docker-stack-dlubm-remove
 
 #### Remove Traefik Service
 Remove the Traefik service.
 
-    $ ./docker-service-traefik-remove
+    $ ./scripts/docker-service-traefik-remove
 
 #### Remove Reverse Proxy Network
 Create the reverse proxy network.
 
-    $ ./docker-network-reverseproxy-remove
+    $ ./scripts/docker-network-reverseproxy-remove
 
 #### Disassemble Docker Swarm
 Disassemble the Docker Swarm.
 
-    $ ./docker-swarm-disassemble
+    $ ./scripts/docker-swarm-disassemble
 
 #### Stop AWS EC2 Instances
 Stop the AWS EC2 instances.
 
-    $ ./awsec2-instances-stop
+    $ ./scripts/awsec2-instances-stop
 
 #### Remove AWS EC2 Security Group
 Remove the AWS EC2 security group.
 
-    $ ./awsec2-securitygroup-remove
+    $ ./scripts/awsec2-securitygroup-remove

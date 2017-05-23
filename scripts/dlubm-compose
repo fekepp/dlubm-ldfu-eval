@@ -5,6 +5,21 @@
 source configuration
 
 
+domain_global_cmd=""
+if [ "${DOMAIN_GLOBAL}" == "true" ]
+then
+	domain_global_cmd="-dg"
+fi
+
+domain_detailed_cmd=""
+if [ "${DOMAIN_DETAILED}" == "true" ]
+then
+	domain_detailed_cmd="-dd"
+fi
+
+#	-dg "${DOMAIN_GLOBAL}" \
+#	-dd "${DOMAIN_DETAILED}" \
+
 docker pull fekepp/dlubm
 
 docker run --rm --entrypoint /bin/sh fekepp/dlubm /usr/share/dlubm/bin/dlubm-composer \
@@ -13,8 +28,8 @@ docker run --rm --entrypoint /bin/sh fekepp/dlubm /usr/share/dlubm/bin/dlubm-com
 	-iu "${IMAGE_UNIVERSITY}" \
 	-id "${IMAGE_DEPARTMENT}" \
 	-d "${DOMAIN}" \
-	-dg "${DOMAIN_GLOBAL}" \
-	-dd "${DOMAIN_DETAILED}" \
+	$domain_global_cmd \
+	$domain_detailed_cmd \
 	-n "${NETWORK_REVERSE_PROXY}" \
 	-g "${GRANULARITY}" \
 	-s "${SEED}" \
@@ -22,7 +37,7 @@ docker run --rm --entrypoint /bin/sh fekepp/dlubm /usr/share/dlubm/bin/dlubm-com
 	-ua "${UNIVERSITY_AMOUNT}" \
 	-ul "${UNIVERSITY_LIMIT}" \
 	-dl "${DEPARTMENT_LIMIT}" \
-	> dlubm.yml
+	> composition.yml
 
 
 IMAGE_ONTOLOGY="fekepp/dlubm:latest"

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+
+# Include configuration
+source configuration
+
+
+./scripts/evaluation-experiment
+

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+
+# Include configuration
+source configuration
+
+
+./scripts/docker-stack-dlubm-remove
+./scripts/docker-service-traefik-remove
+./scripts/docker-network-reverseproxy-remove
+./scripts/docker-swarm-disassemble
+./scripts/awsec2-instances-stop
+
+# Currently, removal of the security group must be triggers manually once all instances terminated
+# TODO: Let the script wait for the termination of all assigned instances
+# TODO: Alternatively, unassign the security group for to-be-terminated instances befor termination
+#./scripts/awsec2-securitygroup-remove
+

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+# Include configuration
+source configuration
+
+
+./scripts/awsec2-securitygroup-create
+./scripts/awsec2-instances-start
+./scripts/evaluation-preparation
+./scripts/docker-swarm-assemble
+./scripts/docker-network-reverseproxy-create
+./scripts/docker-service-traefik-create
+./scripts/docker-stack-dlubm-deploy
+./scripts/docker-swarm-ips
