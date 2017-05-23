@@ -58,7 +58,7 @@ Compose the environment.
 
 Actions:
 
-1. Generates based on the configuration a composition of containers saved in the file *docker-compose.yml*
+1. Generates based on the configuration a composition of containers saved in the *docker-compose.yml* file
 
 ----
 Deploy the DLUBM environment.
