@@ -192,7 +192,7 @@ Create the reverse proxy network.
     $ ./scripts/docker-network-reverseproxy-create
 
 ----
-Create the reverse proxy network that will be used by the reverse proxy container and all othercontainers.
+Create the reverse proxy network that will be used by the reverse proxy container and all other containers.
 
 #### Create Reverse Proxy Service
 Create the reverse proxy service.
