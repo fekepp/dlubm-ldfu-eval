@@ -37,7 +37,7 @@ docker run --rm --entrypoint /bin/sh fekepp/dlubm /usr/share/dlubm/bin/dlubm-com
 	-ua "${UNIVERSITY_AMOUNT}" \
 	-ul "${UNIVERSITY_LIMIT}" \
 	-dl "${DEPARTMENT_LIMIT}" \
-	> composition.yml
+	> docker-compose.yml
 
 
 IMAGE_ONTOLOGY="fekepp/dlubm:latest"

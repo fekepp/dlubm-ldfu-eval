@@ -15,7 +15,7 @@ eval $(docker-machine env ${first_manager_instance_name})
 echo "done! [${first_manager_instance_name}]"
 
 echo "Deploy stack > DLUBM..."
-docker stack deploy -c ./compositions.yml dlubm
+docker stack deploy -c docker-compose.yml dlubm
 echo "done!"
 
 echo -n "Switch environment back to local..."
