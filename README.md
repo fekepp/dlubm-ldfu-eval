@@ -200,8 +200,9 @@ Create the reverse proxy service.
     $ ./scripts/docker-service-traefik-create
 
 ----
-Create the reverse proxy service  we utilize Traefik.
+Create the reverse proxy service by, currently, using a proper configured Traefik.
 The service is restricted to run at a manager node to retrieve required metadata.
+It uses the reverse proxy network to redirect requests at (sub)domains to responsible containers.
 
 #### Deploy DLUBM Stack
 Deploy the DLUBM stack.
