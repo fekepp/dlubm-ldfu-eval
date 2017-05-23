@@ -41,7 +41,7 @@ For detailed explanations see the *Usage* section below.
 
 ----
 Configure the DLUBM environment.
-We require a properly configured AWS CLI with permission to manage EC2 instances and a Dynamic DNS domain entry with enabled wildcard for subdomains designated to provide URIs for the DLUBM environment.
+We require a properly configured AWS CLI with permission to manage AWS EC2 instances and a Dynamic DNS domain entry with enabled wildcard for subdomains designated to provide URIs for the DLUBM environment.
 Copy the example configuration file as base.
 
     $ cp configuration.example configuration
