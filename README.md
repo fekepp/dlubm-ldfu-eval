@@ -35,8 +35,8 @@ or similar providers.
 
 
 ## Quickstart
-We provide high-level scripts for composing, deploying, evaluating, and termination of the Distributed LUBM benchmark environment.
-The evaluation uses the Linked Data query engine Linked Data-Fu (LD-Fu).
+We provide high-level scripts for composing, deploying, and terminating the Distributed LUBM benchmark environment.
+After deploying, we are evaluating the Linked Data query engine Linked Data-Fu (LD-Fu).
 For detailed explanations see the *Usage* section below.
 
 ----
