@@ -31,6 +31,55 @@ Therefore, a configurable domain entry is required, for example, provided by
 
 or similar providers.
 
+
+
+
+## Quickstart
+We provide high-level scripts for composing, deploying, evaluating, and termination of the Distributed LUBM benchmark environment.
+The evaluation uses the Linked Data query engine Linked Data-Fu (LD-Fu).
+For detailed explanations see the *Usage* section below.
+
+----
+Configure the DLUBM environment.
+We require a properly configured AWS CLI with permission to manage EC2 instances and a Dynamic DNS domain entry with enabled wildcard for subdomains designated to provide URIs for the DLUBM environment.
+Copy the example configuration file as base.
+
+    $ cp configuration.example configuration
+
+Edit the configuration file and update at least the *DOMAIN* parameter with the Dynamic DNS entry.
+Take a look at the amount and type of EC2 instances to be generated as well as the configuration of the DLUBM.
+With the current example configuration, one EC2 instance for evaluation, one EC2 instance for a Swarm Manager, and 18 EC2 instances for Docker Swarm workers are initiated that host a DLUBM with 100 containers.
+Currently, the amount of 20 EC2 instances is the maximum for instances running in parallel without requesting a limit increase.
+
+----
+Compose the environment.
+
+    $ ./compose
+
+----
+Update the Dynamic DNS domain entry.
+Use an external IP of an instance, for example, of the first manager of the Docker Swarm.
+
+    $ ./scripts/docker-swarm-ips
+
+----
+Deploy the DLUBM environment.
+
+    $ ./deploy
+
+----
+Evaluate LD-Fu against the DLUBM environment.
+
+    $ ./evaluate
+
+----
+Terminate the DLUBM environment.
+
+    $ ./terminate
+
+
+
+
 ## Usage
 Following steps are required to configure, compose, deploy, and terminate the DLUBM environment.
 While everything could be handled by two or three scripts, these are split for better readability in smaller scripts that handle related functionality.
