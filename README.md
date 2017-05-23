@@ -218,7 +218,7 @@ Retrieve instance IP adresses.
     $ ./scripts/docker-swarm-ips
 
 ----
-Retrieve instance IP adresses and update the dynamic DNS domain entry to point to an external IP of the swarm, e.g., the first manager instance.
+Retrieve instance IP adresses and update the Dynamic DNS domain entry to point to an external IP of the swarm, e.g., the first manager instance.
 
 **Important:** The domain must be the domain set in the configuration and must have wildcard enabled. If not, you must remove the stack and reverse proxy service, update the configuration, recreate the composition, recreate the reverse proxy service, and redeploy the stack.
 
