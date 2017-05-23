@@ -53,6 +53,12 @@ Configuration parameters:
     * The domain entry. **Important:** This entry must correspond to the dynamic DNS domain entry with enabled wildcard. The composition is generated with respect to this domain entry and in addition the reverse proxy service is configured to handle requests to this domain as well as subdomains.
 * TODO
 
+### Composition
+#### Generate DLUBM Composition
+Generate the DLUBM Composition.
+
+    $ ./dlubm-compose
+
 ### Deployment
 #### Create AWS EC2 Security Group
 Create the AWS EC2 security group.

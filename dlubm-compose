@@ -1,0 +1,55 @@
+#!/bin/bash
+
+
+# Include configuration
+source configuration
+
+
+docker pull fekepp/dlubm
+
+docker run --rm --entrypoint /bin/sh fekepp/dlubm /usr/share/dlubm/bin/dlubm-composer \
+	-io "${IMAGE_ONTOLOGY}" \
+	-ig "${IMAGE_GLOBAL}" \
+	-iu "${IMAGE_UNIVERSITY}" \
+	-id "${IMAGE_DEPARTMENT}" \
+	-d "${DOMAIN}" \
+	-dg "${DOMAIN_GLOBAL}" \
+	-dd "${DOMAIN_DETAILED}" \
+	-n "${NETWORK_REVERSE_PROXY}" \
+	-g "${GRANULARITY}" \
+	-s "${SEED}" \
+	-uo "${UNIVERSITY_OFFSET}" \
+	-ua "${UNIVERSITY_AMOUNT}" \
+	-ul "${UNIVERSITY_LIMIT}" \
+	-dl "${DEPARTMENT_LIMIT}" \
+	> dlubm.yml
+
+
+IMAGE_ONTOLOGY="fekepp/dlubm:latest"
+IMAGE_GLOBAL="fekepp/dlubm:latest"
+IMAGE_UNIVERSITY="fekepp/dlubm:latest"
+IMAGE_DEPARTMENT="fekepp/dlubm:latest"
+
+
+#    -id,--image-department <arg>      Image for department level
+#    -ig,--image-global <arg>          Image for global level
+#    -io,--image-ontology <arg>        Image for ongtology
+#    -iu,--image-university <arg>      Image for university level
+#    -d,--domain <arg>                 Reverse proxy domain
+#    -n,--network <arg>                Reverse proxy network
+#    -dg,--domain-global <arg>         Enable global domain
+#    -dd,--domain-detailed <arg>       Enable detailed subdomains
+
+#    -g,--granularity <arg>            Granularity:
+#                                      GLOBAL, UNIVERSITY, DEPARTMENT
+#    -s,--seed <arg>                   Seed
+#    -uo,--university-offset <arg>     University offset
+#    -ua,--university-amount <arg>     University amount
+#    -ul,--university-limit <arg>      University limit
+#    -dl,--department-limit <arg>      Department limit
+
+
+#    -dt,--department-template <arg>   URI template for departments
+#    -o,--ontology <arg>               URI for the ontology
+#    -ut,--university-template <arg>   URI template for universities
+
