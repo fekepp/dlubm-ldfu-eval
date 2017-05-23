@@ -74,7 +74,6 @@ Actions:
 1. Creates an overlay network used by the reverse proxy for directing requests at (sub)domains to responsible containers
 1. Creates the reverse proxy service, currently a Traefik reverse proxy
 1. Deploys the DLUBM stack, i.e., deploys the composition generated beforehand to the Docker Swarm
-1. Lists all internal and external IPs of Docker Swarm nodes
 
 ----
 Update the Dynamic DNS domain entry.
