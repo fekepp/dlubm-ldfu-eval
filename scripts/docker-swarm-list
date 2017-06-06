@@ -6,7 +6,7 @@ source configuration
 
 
 echo "Retrieve first manager instance name"
-first_manager_instance_name="$(docker-machine ls -q | grep "dlubm-swarm-manager-[0-9]*0$")"
+first_manager_instance_name="$(docker-machine ls -q | grep "${INSTANCE_NAME_PREFIX_SWARM_MANAGER}[0-9]*0$")"
 echo "Retrieved first manager instance name > ${first_manager_instance_name}"
 
 

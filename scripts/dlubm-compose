@@ -40,12 +40,6 @@ docker run --rm --entrypoint /bin/sh fekepp/dlubm /usr/share/dlubm/bin/dlubm-com
 	> docker-compose.yml
 
 
-IMAGE_ONTOLOGY="fekepp/dlubm:latest"
-IMAGE_GLOBAL="fekepp/dlubm:latest"
-IMAGE_UNIVERSITY="fekepp/dlubm:latest"
-IMAGE_DEPARTMENT="fekepp/dlubm:latest"
-
-
 #    -id,--image-department <arg>      Image for department level
 #    -ig,--image-global <arg>          Image for global level
 #    -io,--image-ontology <arg>        Image for ongtology
